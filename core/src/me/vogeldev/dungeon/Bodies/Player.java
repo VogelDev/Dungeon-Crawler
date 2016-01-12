@@ -1,13 +1,14 @@
 package me.vogeldev.dungeon.Bodies;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.Arrays;
+
+import me.vogeldev.dungeon.support.ControllerHandler;
 
 /**
  * Created by Vogel on 1/10/2016.
@@ -24,6 +25,7 @@ public class Player {
     private TextureRegion playerDown; // ** Points to the blue Circle **//
     private TextureRegion playerRight; // ** Points to the yellow Circle **//
     private TextureRegion playerLeft; // ** Points to the green Circle **//
+    private ControllerHandler controller;
 
     int x, y, hp;
     int[] moving;
@@ -45,7 +47,31 @@ public class Player {
         sprite = playerUp;
     }
 
+    public void setController(ControllerHandler controller){
+        this.controller = controller;
+    }
+
     public void update(){
+
+        if(!controller.hasControllers()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.A))
+                move(MOVE_LEFT);
+            else
+                stop(MOVE_LEFT);
+            if (Gdx.input.isKeyPressed(Input.Keys.D))
+                move(MOVE_RIGHT);
+            else
+                stop(MOVE_RIGHT);
+            if (Gdx.input.isKeyPressed(Input.Keys.W))
+                move(MOVE_UP);
+            else
+                stop(MOVE_UP);
+            if (Gdx.input.isKeyPressed(Input.Keys.S))
+                move(MOVE_DOWN);
+            else
+                stop(MOVE_DOWN);
+        }
+
         y += moving[MOVE_UP];
         y -= moving[MOVE_DOWN];
         x += moving[MOVE_RIGHT];

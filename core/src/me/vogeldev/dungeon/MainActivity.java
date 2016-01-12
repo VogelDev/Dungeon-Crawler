@@ -35,6 +35,7 @@ public class MainActivity extends ApplicationAdapter {
 		// Listen to all controllers, not just one
 		controller = new ControllerHandler(player);
 		Controllers.addListener(controller);
+        player.setController(controller);
 
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
@@ -42,26 +43,26 @@ public class MainActivity extends ApplicationAdapter {
 		glyphLayout = new GlyphLayout();
 
 		if(Controllers.getControllers().size == 0)
-		{
 			controller.setHasControllers(false);
-		}
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 
 		player.update();
 		player.draw(batch);
 
+        /*
 		if(!controller.hasControllers()) {
 			glyphLayout.setText(font, message);
 			font.draw(batch, message,
 					Gdx.graphics.getWidth() / 2 - glyphLayout.width / 2,
 					Gdx.graphics.getHeight() / 2 - glyphLayout.height / 2);
 		}else {}
+        */
 		batch.end();
 	}
 }
