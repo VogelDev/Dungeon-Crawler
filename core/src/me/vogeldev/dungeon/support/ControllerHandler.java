@@ -27,7 +27,7 @@ public class ControllerHandler implements ControllerListener {
         this.hasControllers = hasControllers;
     }
 
-    // connected and disconnect dont actually appear to work for XBox 360 controllers.
+    // connected and disconnect don't actually appear to work for XBox 360 controllers.
     @Override
     public void connected(Controller controller) {
         hasControllers = true;
@@ -68,6 +68,9 @@ public class ControllerHandler implements ControllerListener {
         // For the Y translation, I use a negative because I like inverted analog stick
         // Like all normal people do! ;)
 
+        System.out.println(System.currentTimeMillis() + ": " + axisCode);
+
+
         // Left Stick
         if(axisCode == XBox360Pad.AXIS_LEFT_X)
             if(value > .25f)
@@ -92,7 +95,7 @@ public class ControllerHandler implements ControllerListener {
         if(axisCode == XBox360Pad.AXIS_RIGHT_X)
             return false;
 
-
+        
         return false;
     }
 

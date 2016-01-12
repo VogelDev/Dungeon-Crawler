@@ -61,8 +61,7 @@ public class MainActivity extends ApplicationAdapter {
 			font.draw(batch, message,
 					Gdx.graphics.getWidth() / 2 - glyphLayout.width / 2,
 					Gdx.graphics.getHeight() / 2 - glyphLayout.height / 2);
-		}else {
-		}
+		}else {}
 		batch.end();
 	}
 }
