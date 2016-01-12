@@ -20,26 +20,28 @@ public class Player {
                             MOVE_DOWN = 2,
                             MOVE_LEFT = 3;
 
-    private TextureAtlas playerAtlas; //** Holds the entire image **//
-    private TextureRegion playerUp; // ** Points to the red Circle **//
-    private TextureRegion playerDown; // ** Points to the blue Circle **//
-    private TextureRegion playerRight; // ** Points to the yellow Circle **//
-    private TextureRegion playerLeft; // ** Points to the green Circle **//
+    private TextureAtlas playerAtlas;
+    private TextureRegion playerUp;
+    private TextureRegion playerDown;
+    private TextureRegion playerRight;
+    private TextureRegion playerLeft;
     private ControllerHandler controller;
 
-    int x, y, hp;
+    int x, y, hp, velocity, screenWidth, screenHeight;
     int[] moving;
     TextureRegion sprite;
-    int speed = 5;
 
-    public Player(int x, int y, int hp) {
+    public Player(int x, int y, int hp, int screenWIdth, int screenHeight) {
         this.x = x;
         this.y = y;
         this.hp = hp;
+        this.screenWidth = screenWIdth;
+        this.screenHeight = screenHeight;
+        velocity = 5;
 
         moving = new int[]{0, 0, 0, 0};
 
-        playerAtlas = new TextureAtlas("player_atlas.pack"); //** Load circles.pack and circles.png **//
+        playerAtlas = new TextureAtlas("game_atlas.pack"); //** Load circles.pack and circles.png **//
         playerUp = playerAtlas.findRegion("player_debug_up");  //** Load redCircle from circleAtlas **//
         playerDown = playerAtlas.findRegion("player_debug_down"); //** Load blueCircle from circleAtlas **//
         playerRight = playerAtlas.findRegion("player_debug_right"); //** Load greenCircle from circleAtlas **//
@@ -98,11 +100,11 @@ public class Player {
     }
 
     public void draw(SpriteBatch batch){
-        batch.draw(sprite, x, y, sprite.getRegionWidth(), sprite.getRegionHeight());
+        batch.draw(sprite, (int)(screenWidth / 2), (int)(screenHeight / 2), sprite.getRegionWidth(), sprite.getRegionHeight());
     }
 
     public void move(int dir){
-        moving[dir] = speed;
+        moving[dir] = velocity;
     }
 
     public void stop(int dir){

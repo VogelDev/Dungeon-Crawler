@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
+import me.vogeldev.dungeon.Bodies.Enemy;
 import me.vogeldev.dungeon.Bodies.Player;
 import me.vogeldev.dungeon.support.ControllerHandler;
 
@@ -26,11 +27,13 @@ public class MainActivity extends ApplicationAdapter {
 	Player player;
 	ControllerHandler controller;
 
+    Enemy[] enemies;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 
-		player = new Player(0, 0, 50);
+		player = new Player(0, 0, 50, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		// Listen to all controllers, not just one
 		controller = new ControllerHandler(player);
@@ -44,6 +47,13 @@ public class MainActivity extends ApplicationAdapter {
 
 		if(Controllers.getControllers().size == 0)
 			controller.setHasControllers(false);
+
+        enemies = new Enemy[10];
+
+        for(int i = 0; i < enemies.length; i++){
+            enemies[i] = new Enemy(i * 50 + 100, i * 50, 1);
+        }
+
 	}
 
 	@Override
@@ -54,6 +64,9 @@ public class MainActivity extends ApplicationAdapter {
 
 		player.update();
 		player.draw(batch);
+        for(int i = 0; i < enemies.length; i++){
+            enemies[i].draw(batch);
+        }
 
         /*
 		if(!controller.hasControllers()) {
