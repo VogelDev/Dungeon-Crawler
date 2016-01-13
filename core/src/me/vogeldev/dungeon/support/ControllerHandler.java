@@ -95,7 +95,7 @@ public class ControllerHandler implements ControllerListener {
         if(axisCode == XBox360Pad.AXIS_RIGHT_X)
             return false;
 
-        
+
         return false;
     }
 
