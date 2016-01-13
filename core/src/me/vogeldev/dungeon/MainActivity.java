@@ -29,7 +29,7 @@ public class MainActivity extends ApplicationAdapter {
 	GlyphLayout glyphLayout;
 	Player player;
 	ControllerHandler controller;
-	float screenWidth, screenHeight;
+	Vector2 screenRes;
 
 	Vector2 playerPos;
 
@@ -43,9 +43,9 @@ public class MainActivity extends ApplicationAdapter {
 		//test comment
 		
 		playerPos = new Vector2(0,0);
-		screenWidth = Gdx.graphics.getWidth();
-		screenHeight = Gdx.graphics.getHeight();
-		player = new Player(playerPos.x, playerPos.y, 50, screenWidth, screenHeight);
+		screenRes.x = Gdx.graphics.getWidth();
+		screenRes.y = Gdx.graphics.getHeight();
+		player = new Player(playerPos.x, playerPos.y, 50, screenRes.x, screenRes.y);
 
 		// Listen to all controllers, not just one
 		controller = new ControllerHandler(player);
@@ -77,14 +77,14 @@ public class MainActivity extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		player.update(enemies);
-		playerPos.x = player.getX() - screenWidth / 2;
-		playerPos.y = player.getY() - screenHeight / 2;
+		playerPos.x = player.getX();
+		playerPos.y = player.getY();
 
 		batch.begin();
-		font.draw(batch, playerPos.x + ", " + playerPos.y, 0, screenHeight - 50);
+		font.draw(batch, playerPos.x + ", " + playerPos.y, 0, screenRes.y - 50);
 
 		for(Enemy e : enemies)
-			e.draw(batch, playerPos);
+			e.draw(batch, playerPos, screenRes);
 
 		/*
         for(int i = 0; i < enemies.size(); i++){
@@ -105,7 +105,7 @@ public class MainActivity extends ApplicationAdapter {
 
 
 		glyphLayout.setText(font, player.debug());
-		font.draw(batch, player.debug(), screenWidth - glyphLayout.width, glyphLayout.height);
+		font.draw(batch, player.debug(), screenRes.x - glyphLayout.width, glyphLayout.height);
 
 
 		batch.end();
