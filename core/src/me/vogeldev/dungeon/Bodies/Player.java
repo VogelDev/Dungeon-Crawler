@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import me.vogeldev.dungeon.support.ControllerHandler;
@@ -56,7 +57,7 @@ public class Player {
         this.controller = controller;
     }
 
-    public void update(Enemy[] enemies){
+    public void update(ArrayList<Enemy> enemies){
 
         if(!controller.hasControllers()){
             if (Gdx.input.isKeyPressed(Input.Keys.A))
@@ -79,9 +80,9 @@ public class Player {
 
         debug = "Player: " + x + ", " + y;
 
-        for(int i = 0; i < enemies.length; i++){
+        for(int i = 0; i < enemies.size(); i++){
 
-            Enemy b1 = enemies[i];
+            Enemy b1 = enemies.get(i);
             boolean rightClear = x > b1.getX() + 45;
             boolean belowClear = y < b1.getY() - 45;
             boolean leftClear = x < b1.getX() - 45;

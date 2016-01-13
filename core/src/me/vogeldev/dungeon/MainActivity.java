@@ -16,6 +16,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.ArrayList;
+
 import me.vogeldev.dungeon.Bodies.Enemy;
 import me.vogeldev.dungeon.Bodies.Player;
 import me.vogeldev.dungeon.Bodies.Wall;
@@ -31,7 +33,8 @@ public class MainActivity extends ApplicationAdapter {
 
 	Vector2 playerPos;
 
-	Enemy[] enemies;
+	ArrayList<Enemy> enemies;
+
 
 	@Override
 	public void create () {
@@ -55,11 +58,11 @@ public class MainActivity extends ApplicationAdapter {
 		if(Controllers.getControllers().size == 0)
 			controller.setHasControllers(false);
 
-        enemies = new Enemy[10];
+        enemies = new ArrayList<Enemy>();
 
         for(int i = 0; i < 10; i++){
             //enemies[i] = new Enemy(i * 50, i * 50, 1);
-			enemies[i] = new Wall(100, i * 50, 1);
+			enemies.add(new Wall(100, i * 50, 1));
         }
 
 	}
@@ -76,8 +79,8 @@ public class MainActivity extends ApplicationAdapter {
 		batch.begin();
 		font.draw(batch, playerPos.x + ", " + playerPos.y, 0, screenHeight - 50);
 
-        for(int i = 0; i < enemies.length; i++){
-            enemies[i].draw(batch, playerPos);
+        for(int i = 0; i < enemies.size(); i++){
+            enemies.get(i).draw(batch, playerPos);
         }
 
 		player.draw(batch);
