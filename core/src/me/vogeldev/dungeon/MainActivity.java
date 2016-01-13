@@ -40,6 +40,8 @@ public class MainActivity extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 
+		// hello world
+		
 		playerPos = new Vector2(0,0);
 		screenWidth = Gdx.graphics.getWidth();
 		screenHeight = Gdx.graphics.getHeight();
