@@ -60,9 +60,11 @@ public class MainActivity extends ApplicationAdapter {
 
         enemies = new ArrayList<Enemy>();
 
+
+
         for(int i = 0; i < 10; i++){
-            //enemies[i] = new Enemy(i * 50, i * 50, 1);
 			enemies.add(new Wall(100, i * 50, 1));
+			enemies.add(new Enemy(-100, i * 50, 1));
         }
 
 	}
@@ -79,9 +81,14 @@ public class MainActivity extends ApplicationAdapter {
 		batch.begin();
 		font.draw(batch, playerPos.x + ", " + playerPos.y, 0, screenHeight - 50);
 
+		for(Enemy e : enemies)
+			e.draw(batch, playerPos);
+
+		/*
         for(int i = 0; i < enemies.size(); i++){
             enemies.get(i).draw(batch, playerPos);
         }
+        */
 
 		player.draw(batch);
 
@@ -96,7 +103,7 @@ public class MainActivity extends ApplicationAdapter {
 
 
 		glyphLayout.setText(font, player.debug());
-		font.draw(batch, player.debug(), 0, glyphLayout.height);
+		font.draw(batch, player.debug(), screenWidth - glyphLayout.width, glyphLayout.height);
 
 
 		batch.end();

@@ -94,9 +94,9 @@ public class Player {
             boolean belowClear = y < b1.getY() - 45;
             boolean leftClear = x < b1.getX() - 45;
             boolean aboveClear = y > b1.getY() + 45;
-            //debug += "\n" + b1.getClass().getName();
-            //debug += "\nright: " + rightClear + "\nbelow: " + belowClear + "\nleft: " + leftClear + "\nabove: " + aboveClear;
-            //debug += "\n" + b1.getX() + ", " + b1.getY();
+            debug += "\n" + b1.getClass().getName();
+            debug += "\nright: " + rightClear + "\nbelow: " + belowClear + "\nleft: " + leftClear + "\nabove: " + aboveClear;
+            debug += "\n" + b1.getX() + ", " + b1.getY();
 
             if(b1 instanceof Wall){
 
