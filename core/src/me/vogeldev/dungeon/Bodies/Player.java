@@ -27,25 +27,28 @@ public class Player {
     private TextureRegion playerLeft;
     private ControllerHandler controller;
 
-    int x, y, hp, velocity, screenWidth, screenHeight;
-    int[] moving;
+    String debug = "";
+    float x, y, screenWidth, screenHeight;
+    int hp, velocity, level;
+    boolean[] moving;
     TextureRegion sprite;
 
-    public Player(int x, int y, int hp, int screenWIdth, int screenHeight) {
+    public Player(float x, float y, int hp, float screenWidth, float screenHeight) {
         this.x = x;
         this.y = y;
         this.hp = hp;
-        this.screenWidth = screenWIdth;
+        this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         velocity = 5;
+        level = 1;
 
-        moving = new int[]{0, 0, 0, 0};
+        moving = new boolean[]{false, false, false, false};
 
-        playerAtlas = new TextureAtlas("game_atlas.pack"); //** Load circles.pack and circles.png **//
-        playerUp = playerAtlas.findRegion("player_debug_up");  //** Load redCircle from circleAtlas **//
-        playerDown = playerAtlas.findRegion("player_debug_down"); //** Load blueCircle from circleAtlas **//
-        playerRight = playerAtlas.findRegion("player_debug_right"); //** Load greenCircle from circleAtlas **//
-        playerLeft = playerAtlas.findRegion("player_debug_left"); //** Load yellowCircle from circleAtlas **//
+        playerAtlas = new TextureAtlas("game_atlas.pack");
+        playerUp = playerAtlas.findRegion("player_debug_up");
+        playerDown = playerAtlas.findRegion("player_debug_down");
+        playerRight = playerAtlas.findRegion("player_debug_right");
+        playerLeft = playerAtlas.findRegion("player_debug_left");
         sprite = playerUp;
     }
 
@@ -53,9 +56,9 @@ public class Player {
         this.controller = controller;
     }
 
-    public void update(){
+    public void update(Enemy[] enemies){
 
-        if(!controller.hasControllers()) {
+        if(!controller.hasControllers()){
             if (Gdx.input.isKeyPressed(Input.Keys.A))
                 move(MOVE_LEFT);
             else
@@ -74,19 +77,69 @@ public class Player {
                 stop(MOVE_DOWN);
         }
 
-        y += moving[MOVE_UP];
-        y -= moving[MOVE_DOWN];
-        x += moving[MOVE_RIGHT];
-        x -= moving[MOVE_LEFT];
+        debug = "Player: " + x + ", " + y;
 
-        if(moving[MOVE_UP] > 1)
+        for(int i = 0; i < enemies.length; i++){
+
+            Enemy b1 = enemies[i];
+            boolean rightClear = x > b1.getX() + 45;
+            boolean belowClear = y < b1.getY() - 45;
+            boolean leftClear = x < b1.getX() - 45;
+            boolean aboveClear = y > b1.getY() + 45;
+            //debug += "\n" + b1.getClass().getName();
+            //debug += "\nright: " + rightClear + "\nbelow: " + belowClear + "\nleft: " + leftClear + "\nabove: " + aboveClear;
+            //debug += "\n" + b1.getX() + ", " + b1.getY();
+
+            if(b1 instanceof Wall){
+
+                if(!rightClear && !leftClear && !aboveClear && !belowClear) {
+                    if (x < b1.getX() && y > b1.getY() - 40 && y < b1.getY() + 10)
+                        stop(MOVE_RIGHT);
+                    if (x > b1.getX() && y > b1.getY() - 40 && y < b1.getY() + 10)
+                        stop(MOVE_LEFT);
+                    if (y < b1.getY() && x > b1.getX() - 40 && x < b1.getX() + 10)
+                        stop(MOVE_UP);
+                    if (y > b1.getY() && x > b1.getX() - 40 && x < b1.getX() + 10)
+                        stop(MOVE_DOWN);
+                }
+
+            }
+        }
+
+        double angleVel = velocity - Math.sqrt(velocity * velocity * 2) / velocity;
+
+        if(moving[MOVE_UP]) {
+            if (moving[MOVE_LEFT]){
+                y += angleVel;
+                x -= angleVel;
+            }else if(moving[MOVE_RIGHT]){
+                y += angleVel;
+                x += angleVel;
+            }else
+                y += velocity;
             sprite = playerUp;
-        else if(moving[MOVE_DOWN] > 1)
+        }else if(moving[MOVE_DOWN]) {
+            if (moving[MOVE_LEFT]){
+                y -= angleVel;
+                x -= angleVel;
+            }else if(moving[MOVE_RIGHT]){
+                y -= angleVel;
+                x += angleVel;
+            }else
+                y -= velocity;
             sprite = playerDown;
-        else if(moving[MOVE_RIGHT] > 1)
+        }else if(moving[MOVE_RIGHT]) {
+            x += velocity;
             sprite = playerRight;
-        else if(moving[MOVE_LEFT] > 1)
+        }else if(moving[MOVE_LEFT]) {
+            x -= velocity;
             sprite = playerLeft;
+        }
+
+    }
+
+    public String debug(){
+        return debug;
     }
 
     @Override
@@ -100,18 +153,18 @@ public class Player {
     }
 
     public void draw(SpriteBatch batch){
-        batch.draw(sprite, (int)(screenWidth / 2), (int)(screenHeight / 2), sprite.getRegionWidth(), sprite.getRegionHeight());
+        batch.draw(sprite, screenWidth / 2, screenHeight / 2, sprite.getRegionWidth(), sprite.getRegionHeight());
     }
 
     public void move(int dir){
-        moving[dir] = velocity;
+        moving[dir] = true;
     }
 
     public void stop(int dir){
-        moving[dir] = 0;
+        moving[dir] = false;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
@@ -119,7 +172,7 @@ public class Player {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
@@ -133,5 +186,13 @@ public class Player {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

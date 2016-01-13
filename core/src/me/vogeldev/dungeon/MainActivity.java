@@ -13,27 +13,34 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import me.vogeldev.dungeon.Bodies.Enemy;
 import me.vogeldev.dungeon.Bodies.Player;
+import me.vogeldev.dungeon.Bodies.Wall;
 import me.vogeldev.dungeon.support.ControllerHandler;
 
 public class MainActivity extends ApplicationAdapter {
 	SpriteBatch batch;
 	BitmapFont font;
 	GlyphLayout glyphLayout;
-	String message = "Please install a controller";
 	Player player;
 	ControllerHandler controller;
+	float screenWidth, screenHeight;
 
-    Enemy[] enemies;
+	Vector2 playerPos;
+
+	Enemy[] enemies;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 
-		player = new Player(0, 0, 50, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		playerPos = new Vector2(0,0);
+		screenWidth = Gdx.graphics.getWidth();
+		screenHeight = Gdx.graphics.getHeight();
+		player = new Player(playerPos.x, playerPos.y, 50, screenWidth, screenHeight);
 
 		// Listen to all controllers, not just one
 		controller = new ControllerHandler(player);
@@ -50,8 +57,9 @@ public class MainActivity extends ApplicationAdapter {
 
         enemies = new Enemy[10];
 
-        for(int i = 0; i < enemies.length; i++){
-            enemies[i] = new Enemy(i * 50 + 100, i * 50, 1);
+        for(int i = 0; i < 10; i++){
+            //enemies[i] = new Enemy(i * 50, i * 50, 1);
+			enemies[i] = new Wall(100, i * 50, 1);
         }
 
 	}
@@ -60,13 +68,19 @@ public class MainActivity extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
 
-		player.update();
-		player.draw(batch);
+		player.update(enemies);
+		playerPos.x = player.getX() - screenWidth / 2;
+		playerPos.y = player.getY() - screenHeight / 2;
+
+		batch.begin();
+		font.draw(batch, playerPos.x + ", " + playerPos.y, 0, screenHeight - 50);
+
         for(int i = 0; i < enemies.length; i++){
-            enemies[i].draw(batch);
+            enemies[i].draw(batch, playerPos);
         }
+
+		player.draw(batch);
 
         /*
 		if(!controller.hasControllers()) {
@@ -76,6 +90,12 @@ public class MainActivity extends ApplicationAdapter {
 					Gdx.graphics.getHeight() / 2 - glyphLayout.height / 2);
 		}else {}
         */
+
+
+		glyphLayout.setText(font, player.debug());
+		font.draw(batch, player.debug(), 0, glyphLayout.height);
+
+
 		batch.end();
 	}
 }

@@ -1,42 +1,41 @@
 package me.vogeldev.dungeon.Bodies;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.Arrays;
 
-import me.vogeldev.dungeon.support.ControllerHandler;
 
 /**
  * Created by Vogel on 1/12/2016.
  */
 public class Enemy {
 
-    private TextureAtlas playerAtlas;
-    private TextureRegion playerUp;
-    private TextureRegion playerDown;
-    private TextureRegion playerRight;
-    private TextureRegion playerLeft;
-
-    int x, y, hp, velocity;
-    int[] moving;
+    protected TextureAtlas textureAtlas;
+    private TextureRegion textureUp;
+    private TextureRegion textureDown;
+    private TextureRegion textureRight;
+    private TextureRegion textureLeft;
     TextureRegion sprite;
+
+    int x, y, hp, velocity, level;
+    int[] moving;
 
     public Enemy(int x, int y, int hp) {
         this.x = x;
         this.y = y;
         this.hp = hp;
+        level = 1;
         velocity = 5;
 
-        playerAtlas = new TextureAtlas("game_atlas.pack"); //** Load circles.pack and circles.png **//
-        playerUp = playerAtlas.findRegion("enemy_debug_up");  //** Load redCircle from circleAtlas **//
-        playerDown = playerAtlas.findRegion("enemy_debug_down"); //** Load blueCircle from circleAtlas **//
-        playerRight = playerAtlas.findRegion("enemy_debug_right"); //** Load greenCircle from circleAtlas **//
-        playerLeft = playerAtlas.findRegion("enemy_debug_left"); //** Load yellowCircle from circleAtlas **//
-        sprite = playerUp;
+        textureAtlas = new TextureAtlas("game_atlas.pack");
+        textureUp = textureAtlas.findRegion("enemy_debug_up");
+        textureDown = textureAtlas.findRegion("enemy_debug_down");
+        textureRight = textureAtlas.findRegion("enemy_debug_right");
+        textureLeft = textureAtlas.findRegion("enemy_debug_left");
+        sprite = textureUp;
     }
 
     public void update(){
@@ -52,8 +51,8 @@ public class Enemy {
                 '}';
     }
 
-    public void draw(SpriteBatch batch){
-        batch.draw(sprite, x, y, sprite.getRegionWidth(), sprite.getRegionHeight());
+    public void draw(SpriteBatch batch, Vector2 playerPos){
+        batch.draw(sprite, x - playerPos.x, y - playerPos.y, sprite.getRegionWidth(), sprite.getRegionHeight());
     }
 
     public void move(int dir){
@@ -86,5 +85,13 @@ public class Enemy {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }
