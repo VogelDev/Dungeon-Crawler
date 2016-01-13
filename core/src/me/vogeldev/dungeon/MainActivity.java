@@ -39,8 +39,6 @@ public class MainActivity extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-
-		// hello world
 		
 		playerPos = new Vector2(0,0);
 		screenWidth = Gdx.graphics.getWidth();
