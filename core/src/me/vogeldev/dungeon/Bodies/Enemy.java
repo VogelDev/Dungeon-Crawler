@@ -13,6 +13,12 @@ import java.util.Arrays;
  */
 public class Enemy {
 
+    public final static int MOVE_UP = 1,
+            MOVE_RIGHT = 2,
+            MOVE_DOWN = 3,
+            MOVE_LEFT = 4;
+
+
     protected TextureAtlas textureAtlas;
     private TextureRegion textureUp;
     private TextureRegion textureDown;
@@ -20,7 +26,9 @@ public class Enemy {
     private TextureRegion textureLeft;
     TextureRegion sprite;
 
-    int x, y, hp, velocity, level;
+    private boolean inRange;
+    int x, y, hp, velocity, level, range;
+    double angleVel;
     int[] moving;
 
     public Enemy(int x, int y, int hp) {
@@ -29,6 +37,8 @@ public class Enemy {
         this.hp = hp;
         level = 1;
         velocity = 5;
+        angleVel = Math.sqrt(Math.pow(velocity, 2) / 2);
+        range = 500;
 
         textureAtlas = new TextureAtlas("game_atlas.pack");
         textureUp = textureAtlas.findRegion("enemy_debug_up");
@@ -38,7 +48,23 @@ public class Enemy {
         sprite = textureUp;
     }
 
-    public void update(){
+    public void update(Player player) {
+
+        Double playerX = 0.0, playerY = 0.0, XComponents, YComponents, distance;
+        playerX = (double) player.getX();
+        playerY = (double) player.getY();
+
+        XComponents = (playerX - x);
+        YComponents = (playerY - y);
+
+        //Distance formula. Could not use the "^2" for some reason so I had to just
+        //Multiply them together.
+        distance = Math.sqrt((XComponents * XComponents) + (YComponents * YComponents));
+
+
+        inRange = distance <= range;
+
+
     }
 
     @Override
@@ -93,5 +119,13 @@ public class Enemy {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public boolean isInRange() {
+        return inRange;
+    }
+
+    public void setInRange(boolean inRange) {
+        this.inRange = inRange;
     }
 }
