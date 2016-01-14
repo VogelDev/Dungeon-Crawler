@@ -42,7 +42,6 @@ public class MainActivity extends ApplicationAdapter {
 
 		//test comment
 
-		screenRes = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		playerPos = new Vector2(0,0);
         screenRes = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		player = new Player(playerPos.x, playerPos.y, 50, screenRes.x, screenRes.y);
@@ -85,12 +84,6 @@ public class MainActivity extends ApplicationAdapter {
 
 		for(Enemy e : enemies)
 			e.draw(batch, playerPos, screenRes);
-
-		/*
-        for(int i = 0; i < enemies.size(); i++){
-            enemies.get(i).draw(batch, playerPos);
-        }
-        */
 
 		player.draw(batch);
 
