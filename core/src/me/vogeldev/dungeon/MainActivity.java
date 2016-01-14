@@ -43,8 +43,7 @@ public class MainActivity extends ApplicationAdapter {
 		//test comment
 		
 		playerPos = new Vector2(0,0);
-		screenRes.x = Gdx.graphics.getWidth();
-		screenRes.y = Gdx.graphics.getHeight();
+        screenRes = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		player = new Player(playerPos.x, playerPos.y, 50, screenRes.x, screenRes.y);
 
 		// Listen to all controllers, not just one

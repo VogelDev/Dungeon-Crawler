@@ -52,7 +52,7 @@ public class Enemy {
     }
 
     public void draw(SpriteBatch batch, Vector2 playerPos, Vector2 screenRes){
-        batch.draw(sprite, x - playerPos.x - screenRes.x / 2, y - playerPos.y - screenRes.y / 2, sprite.getRegionWidth(), sprite.getRegionHeight());
+        batch.draw(sprite, x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, sprite.getRegionWidth(), sprite.getRegionHeight());
     }
 
     public void move(int dir){
