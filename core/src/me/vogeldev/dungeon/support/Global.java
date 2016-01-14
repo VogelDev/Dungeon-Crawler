@@ -23,4 +23,7 @@ public class Global {
     //Attack
     public static final int KEYBOARD_ATTACK = Input.Keys.SPACE;
     public static final int CONTROLLER_ATTACK = XBox360Pad.BUTTON_A;
+
+    // Range of all enemies
+    public static final int RANGE = 500;
 }

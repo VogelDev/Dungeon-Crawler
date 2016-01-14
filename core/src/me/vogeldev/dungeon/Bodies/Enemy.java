@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.Arrays;
 
+import me.vogeldev.dungeon.support.Global;
+
 
 /**
  * Created by Vogel on 1/12/2016.
@@ -38,7 +40,7 @@ public class Enemy {
         level = 1;
         velocity = 5;
         angleVel = Math.sqrt(Math.pow(velocity, 2) / 2);
-        range = 500;
+        range = Global.RANGE;
 
         textureAtlas = new TextureAtlas("game_atlas.pack");
         textureUp = textureAtlas.findRegion("enemy_debug_up");
