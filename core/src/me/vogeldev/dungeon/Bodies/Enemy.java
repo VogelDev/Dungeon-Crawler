@@ -57,7 +57,7 @@ public class Enemy {
         textureDown = textureAtlas.findRegion("enemy_debug_down");
         textureRight = textureAtlas.findRegion("enemy_debug_right");
         textureLeft = textureAtlas.findRegion("enemy_debug_left");
-        sprite = textureUp;
+        sprite = textureLeft;
 
     }
 
@@ -80,13 +80,25 @@ public class Enemy {
         if(sprite == textureUp){
             inSightX = ((player.getX() > lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
             inSightY = ((player.getY() < lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getY() > (y - 100)));
-
-            inSight = (inSightX && inSightY && inRange);
         }
 
-        if(sprite == textureDown){
-
+        else if(sprite == textureDown){
+            lineOfSight.recalcCone(this, 225);
+            inSightX = ((player.getX() < lineOfSight.getaX()) && (player.getX() > lineOfSight.getbX()));
+            inSightY = ((player.getY() > lineOfSight.getaY()) && (player.getY() > lineOfSight.getbY()) && (player.getY() < (y + 50)));
         }
+        else if(sprite == textureRight){
+            lineOfSight.recalcCone(this, -45);
+            inSightX = ((player.getX() < lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
+            inSightY = ((player.getY() > lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getY() > (y - 100)));
+        }
+        else if(sprite == textureLeft){
+            lineOfSight.recalcCone(this, -45);
+            inSightX = ((player.getX() > lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
+            inSightY = ((player.getY() < lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getY() > (y - 100)));
+        }
+
+        inSight = (inSightX && inSightY && inRange);
 
 
 
@@ -194,11 +206,11 @@ public class Enemy {
 
         ConeSight(Enemy e,double a, double b, int ang){
 
-            a = -(Math.sin(ang) * Global.RANGE);
+            a = -(Math.sin(Math.toRadians(ang)) * Global.RANGE);
             aX = e.getX() + a;
             aY = e.getY() - a;
 
-            b = (Math.sin(ang) * Global.RANGE);
+            b = (Math.sin(Math.toRadians(ang)) * Global.RANGE);
             bX = e.getX() + b;
             by = e.getY() + b;
 
@@ -211,13 +223,26 @@ public class Enemy {
         }
 
         private void recalcCone(Enemy e, int angle){
-            sideA = -(Math.sin(angle) * Global.RANGE);
-            aX = e.getX() + sideA;
-            aY = e.getY() - sideA;
 
-            sideB = (Math.sin(angle) * Global.RANGE);
-            bX = e.getX() + sideB;
-            by = e.getY() + sideB;
+            if(e.sprite == textureRight || e.sprite == textureLeft){
+                sideA = -(Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                aX = e.getX() + sideA;
+                aY = e.getY() - sideA;
+
+                sideB = -(Math.sin(Math.toRadians(angle))* Global.RANGE);
+                bX =  e.getX() + sideB;
+                by = e.getY() + sideB;
+            }
+            else{
+                sideA = -(Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                aX = e.getX() + sideA;
+                aY = e.getY() - sideA;
+
+                sideB = (Math.sin(Math.toRadians(angle))* Global.RANGE);
+                bX = e.getX() + sideB;
+                by = e.getY() + sideB;
+            }
+
 
 
         }
