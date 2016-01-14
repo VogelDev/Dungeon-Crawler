@@ -76,8 +76,8 @@ public class Enemy {
 
 
         inRange = distance <= range;
-        inSightX = ((player.getX() > lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
-        inSightY = ((player.getY() < lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()));
+        inSightX = ((player.getX() >= lineOfSight.getaX()) && (player.getX() <= lineOfSight.getbX()));
+        inSightY = ((player.getY() <= lineOfSight.getaY()) && (player.getY() <= lineOfSight.getbY()));
 
         inSight = (inSightX && inSightY && inRange);
 
