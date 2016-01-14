@@ -41,7 +41,8 @@ public class MainActivity extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		//test comment
-		
+
+		screenRes = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		playerPos = new Vector2(0,0);
         screenRes = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		player = new Player(playerPos.x, playerPos.y, 50, screenRes.x, screenRes.y);
