@@ -19,19 +19,31 @@ public class Player {
     public final static int MOVE_UP = 0,
                             MOVE_RIGHT = 1,
                             MOVE_DOWN = 2,
-                            MOVE_LEFT = 3;
+                            MOVE_LEFT = 3,
+                            FACING_UP = 0,
+                            FACING_UP_RIGHT = 1,
+                            FACING_RIGHT = 2,
+                            FACING_DOWN_RIGHT = 3,
+                            FACING_DOWN = 4,
+                            FACING_DOWN_LEFT = 5,
+                            FACING_LEFT = 6,
+                            FACING_UP_LEFT = 7;
 
     private TextureAtlas playerAtlas;
     private TextureRegion playerUp;
     private TextureRegion playerDown;
     private TextureRegion playerRight;
     private TextureRegion playerLeft;
+    private TextureRegion playerUpLeft;
+    private TextureRegion playerDownRight;
+    private TextureRegion playerUpRight;
+    private TextureRegion playerDownLeft;
     private ControllerHandler controller;
 
     String debug = "";
     float x, y, screenWidth, screenHeight;
     double angleVel;
-    int hp, velocity, level;
+    int hp, velocity, level, facing;
     boolean[] moving;
     TextureRegion sprite;
 
@@ -57,7 +69,12 @@ public class Player {
         playerDown = playerAtlas.findRegion("player_debug_down");
         playerRight = playerAtlas.findRegion("player_debug_right");
         playerLeft = playerAtlas.findRegion("player_debug_left");
+        playerUpRight = playerAtlas.findRegion("player_debug_up_right");
+        playerDownLeft = playerAtlas.findRegion("player_debug_down_left");
+        playerDownRight = playerAtlas.findRegion("player_debug_down_right");
+        playerUpLeft = playerAtlas.findRegion("player_debug_up_left");
         sprite = playerUp;
+        facing = FACING_UP;
     }
 
     public void setController(ControllerHandler controller){
@@ -118,30 +135,48 @@ public class Player {
             if (moving[MOVE_LEFT]){
                 y += angleVel;
                 x -= angleVel;
+                sprite = playerUpLeft;
+                facing = FACING_UP_LEFT;
             }else if(moving[MOVE_RIGHT]){
                 y += angleVel;
                 x += angleVel;
-            }else
+                sprite = playerUpRight;
+                facing = FACING_UP_RIGHT;
+            }else {
                 y += velocity;
-            sprite = playerUp;
+                sprite = playerUp;
+                facing = FACING_UP;
+            }
         }else if(moving[MOVE_DOWN]) {
             if (moving[MOVE_LEFT]){
                 y -= angleVel;
                 x -= angleVel;
+                sprite = playerDownLeft;
+                facing = FACING_DOWN_LEFT;
             }else if(moving[MOVE_RIGHT]){
                 y -= angleVel;
                 x += angleVel;
-            }else
+                sprite = playerDownRight;
+                facing = FACING_DOWN_RIGHT;
+            }else {
                 y -= velocity;
-            sprite = playerDown;
+                sprite = playerDown;
+                facing = FACING_DOWN;
+            }
         }else if(moving[MOVE_RIGHT]) {
             x += velocity;
             sprite = playerRight;
+            facing = FACING_RIGHT;
         }else if(moving[MOVE_LEFT]) {
             x -= velocity;
             sprite = playerLeft;
+            facing = FACING_LEFT;
         }
 
+    }
+
+    public int getFacing(){
+        return facing;
     }
 
     public String debug(){

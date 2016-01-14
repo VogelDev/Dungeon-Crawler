@@ -5,71 +5,155 @@ filter: Nearest,Nearest
 repeat: none
 enemy_debug_down
   rotate: false
-  xy: 1, 1
+  xy: 1, 13
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_left
   rotate: false
-  xy: 53, 1
+  xy: 53, 13
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_right
   rotate: false
-  xy: 105, 1
+  xy: 105, 13
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_up
   rotate: false
-  xy: 157, 1
+  xy: 157, 13
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug
   rotate: false
-  xy: 209, 1
+  xy: 209, 13
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_up
   rotate: false
-  xy: 209, 1
+  xy: 209, 13
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_down
   rotate: false
-  xy: 261, 1
+  xy: 261, 13
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+player_debug_down_left
+  rotate: false
+  xy: 313, 13
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+player_debug_down_right
+  rotate: false
+  xy: 365, 13
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_left
   rotate: false
-  xy: 313, 1
+  xy: 417, 13
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_right
   rotate: false
-  xy: 365, 1
+  xy: 469, 13
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+player_debug_up_left
+  rotate: false
+  xy: 521, 13
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+player_debug_up_right
+  rotate: false
+  xy: 573, 13
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 wall_debug
   rotate: false
-  xy: 417, 1
+  xy: 625, 13
   size: 50, 50
   orig: 50, 50
+  offset: 0, 0
+  index: -1
+weapon_debug_down_left
+  rotate: false
+  xy: 677, 33
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+weapon_debug_down_right
+  rotate: false
+  xy: 677, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+weapon_debug_up_left
+  rotate: false
+  xy: 709, 33
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+weapon_debug_up_right
+  rotate: false
+  xy: 709, 1
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+weapon_debug_down
+  rotate: false
+  xy: 741, 23
+  size: 18, 40
+  orig: 18, 40
+  offset: 0, 0
+  index: -1
+weapon_debug_left
+  rotate: false
+  xy: 761, 45
+  size: 40, 18
+  orig: 40, 18
+  offset: 0, 0
+  index: -1
+weapon_debug_right
+  rotate: false
+  xy: 761, 25
+  size: 40, 18
+  orig: 40, 18
+  offset: 0, 0
+  index: -1
+weapon_debug_up
+  rotate: false
+  xy: 803, 23
+  size: 18, 40
+  orig: 18, 40
   offset: 0, 0
   index: -1
