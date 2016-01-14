@@ -114,6 +114,7 @@ public class Player {
             debug += "\n" + b1.getClass().getName();
             debug += "\nright: " + rightClear + "\nbelow: " + belowClear + "\nleft: " + leftClear + "\nabove: " + aboveClear;
             debug += "\n" + b1.getX() + ", " + b1.getY();
+            debug += "\n" + "in Range:" + b1.isInRange();
 
             if(b1 instanceof Wall){
 
@@ -131,6 +132,7 @@ public class Player {
             }
         }
 
+        // Make the player move
         if(moving[MOVE_UP]) {
             if (moving[MOVE_LEFT]){
                 y += angleVel;
