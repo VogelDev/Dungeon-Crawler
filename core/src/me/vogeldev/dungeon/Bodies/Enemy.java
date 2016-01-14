@@ -76,10 +76,18 @@ public class Enemy {
 
 
         inRange = distance <= range;
-        inSightX = ((player.getX() >= lineOfSight.getaX()) && (player.getX() <= lineOfSight.getbX()));
-        inSightY = ((player.getY() <= lineOfSight.getaY()) && (player.getY() <= lineOfSight.getbY()));
 
-        inSight = (inSightX && inSightY && inRange);
+        if(sprite == textureUp){
+            inSightX = ((player.getX() > lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
+            inSightY = ((player.getY() < lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getY() > (y - 100)));
+
+            inSight = (inSightX && inSightY && inRange);
+        }
+
+        if(sprite == textureDown){
+
+        }
+
 
 
 
@@ -198,6 +206,18 @@ public class Enemy {
             sideB = b;
             angle = ang;
 
+
+
+        }
+
+        private void recalcCone(Enemy e, int angle){
+            sideA = -(Math.sin(angle) * Global.RANGE);
+            aX = e.getX() + sideA;
+            aY = e.getY() - sideA;
+
+            sideB = (Math.sin(angle) * Global.RANGE);
+            bX = e.getX() + sideB;
+            by = e.getY() + sideB;
 
 
         }
