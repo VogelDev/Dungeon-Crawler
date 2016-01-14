@@ -43,7 +43,7 @@ public class Player {
     String debug = "";
     float x, y, screenWidth, screenHeight;
     double angleVel;
-    int hp, velocity, level, facing;
+    int hp, velocity, level, facing, width, height;
     boolean[] moving;
     TextureRegion sprite;
 
@@ -54,6 +54,7 @@ public class Player {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         velocity = 5;
+        width = height = 50;
 
         //angle velocity should equal a^2+b^2=c2 where c = velocity and a=b
         //2(a^2)=c^2
@@ -242,5 +243,21 @@ public class Player {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }
