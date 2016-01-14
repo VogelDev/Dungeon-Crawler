@@ -25,5 +25,5 @@ public class Global {
     public static final int CONTROLLER_ATTACK = XBox360Pad.BUTTON_A;
 
     // Range of all enemies
-    public static final int RANGE = 500;
+    public static final int RANGE = 300;
 }

@@ -114,7 +114,8 @@ public class Player {
             debug += "\n" + b1.getClass().getName();
             debug += "\nright: " + rightClear + "\nbelow: " + belowClear + "\nleft: " + leftClear + "\nabove: " + aboveClear;
             debug += "\n" + b1.getX() + ", " + b1.getY();
-            debug += "\n" + "in Range:" + b1.isInRange();
+            debug += "\n" + "in Range: " + b1.isInRange();
+            debug += "\n" + "in Sight: " + b1.isInSight();
 
             if(b1 instanceof Wall){
 
