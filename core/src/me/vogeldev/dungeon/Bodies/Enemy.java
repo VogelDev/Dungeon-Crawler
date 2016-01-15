@@ -39,6 +39,8 @@ public class Enemy {
     double angleVel;
     int[] moving;
 
+    boolean isHit;
+
 
     public Enemy(int x, int y, int hp) {
         this.x = x;
@@ -57,8 +59,9 @@ public class Enemy {
         textureDown = textureAtlas.findRegion("enemy_debug_down");
         textureRight = textureAtlas.findRegion("enemy_debug_right");
         textureLeft = textureAtlas.findRegion("enemy_debug_left");
-        sprite = textureLeft;
+        sprite = textureRight;
 
+        isHit = false;
     }
 
     public void update(Player player) {
@@ -72,7 +75,7 @@ public class Enemy {
 
         //Distance formula. Could not use the "^2" for some reason so I had to just
         //Multiply them together.
-        distance = Math.sqrt((XComponents * XComponents) + (YComponents * YComponents));
+        distance = Math.sqrt(Math.pow(XComponents, 2) + Math.pow(YComponents, 2));
 
 
         inRange = distance <= range;
@@ -99,11 +102,10 @@ public class Enemy {
         }
 
         inSight = (inSightX && inSightY && inRange);
+    }
 
-
-
-
-
+    public void hit(double dmg){
+        hp -= dmg;
     }
 
     @Override

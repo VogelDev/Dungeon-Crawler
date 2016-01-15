@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import me.vogeldev.dungeon.Equipment.Weapon;
 import me.vogeldev.dungeon.support.ControllerHandler;
 
 /**
@@ -47,6 +48,8 @@ public class Player {
     boolean[] moving;
     TextureRegion sprite;
 
+    Weapon weapon;
+
     public Player(float x, float y, int hp, float screenWidth, float screenHeight) {
         this.x = x;
         this.y = y;
@@ -76,6 +79,8 @@ public class Player {
         playerUpLeft = playerAtlas.findRegion("player_debug_up_left");
         sprite = playerUp;
         facing = FACING_UP;
+
+        weapon = new Weapon(this);
     }
 
     public void setController(ControllerHandler controller){
@@ -101,6 +106,12 @@ public class Player {
                 move(MOVE_DOWN);
             else
                 stop(MOVE_DOWN);
+
+            if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+                if(!weapon.isAttacking()){
+                    weapon.thrust();
+                }
+            }
         }
 
         debug = "Player: " + x + ", " + y;
@@ -115,12 +126,13 @@ public class Player {
             debug += "\n" + b1.getClass().getName();
             debug += "\nright: " + rightClear + "\nbelow: " + belowClear + "\nleft: " + leftClear + "\nabove: " + aboveClear;
             debug += "\n" + b1.getX() + ", " + b1.getY();
-            debug += "\n" + "XSight:" + b1.getLineOfSight().getaX() + " " + b1.getLineOfSight().getbX();
-            debug += "\n" + "XSight true:" + b1.isInSightX();
-            debug += "\n" + "YSight:" + b1.getLineOfSight().getaY() + " " + b1.getLineOfSight().getbY();
-            debug += "\n" + "YSight true:" + b1.isInSightY();
+            //debug += "\n" + "XSight:" + b1.getLineOfSight().getaX() + " " + b1.getLineOfSight().getbX();
+            //debug += "\n" + "XSight true:" + b1.isInSightX();
+            //debug += "\n" + "YSight:" + b1.getLineOfSight().getaY() + " " + b1.getLineOfSight().getbY();
+            //debug += "\n" + "YSight true:" + b1.isInSightY();
             debug += "\n" + "in Range: " + b1.isInRange();
             debug += "\n" + "in Sight: " + b1.isInSight();
+            debug += "\n" + "hp: " + b1.getHp();
 
             if(b1 instanceof Wall){
 
@@ -181,6 +193,7 @@ public class Player {
             facing = FACING_LEFT;
         }
 
+        weapon.update(enemies);
     }
 
     public int getFacing(){
@@ -259,5 +272,17 @@ public class Player {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public float getScreenWidth() {
+        return screenWidth;
+    }
+
+    public float getScreenHeight() {
+        return screenHeight;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
     }
 }

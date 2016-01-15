@@ -64,8 +64,8 @@ public class MainActivity extends ApplicationAdapter {
 
 
         for(int i = 0; i < 2; i++){
-			enemies.add(new Wall(100, i * 50, 1));
-			enemies.add(new Enemy(-100, i * 50, 1));
+			enemies.add(new Wall(100, i * 50, 10));
+			enemies.add(new Enemy(-100, i * 50, 5));
         }
 
 	}
@@ -86,6 +86,10 @@ public class MainActivity extends ApplicationAdapter {
 			e.draw(batch, playerPos, screenRes);
 			e.update(player);
 		}
+
+		player.getWeapon().update(enemies);
+
+		player.getWeapon().draw(batch, playerPos, screenRes);
 
 		player.draw(batch);
 
