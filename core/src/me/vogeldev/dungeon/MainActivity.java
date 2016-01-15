@@ -89,7 +89,8 @@ public class MainActivity extends ApplicationAdapter {
 
 		player.getWeapon().update(enemies);
 
-		player.getWeapon().draw(batch, playerPos, screenRes);
+		if(player.getWeapon().isAttacking())
+			player.getWeapon().draw(batch, playerPos, screenRes);
 
 		player.draw(batch);
 
@@ -105,6 +106,8 @@ public class MainActivity extends ApplicationAdapter {
 
 		glyphLayout.setText(font, player.debug());
 		font.draw(batch, player.debug(), screenRes.x - glyphLayout.width, glyphLayout.height);
+		glyphLayout.setText(font, player.getWeapon().debug());
+		font.draw(batch, player.getWeapon().debug(), 0, glyphLayout.height);
 
 
 		batch.end();

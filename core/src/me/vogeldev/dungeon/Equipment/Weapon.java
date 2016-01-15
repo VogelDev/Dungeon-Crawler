@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class Weapon {
     private TextureRegion sprite;
     private boolean isAttacking, atkType, madeContact;
     private float[] motion;
+
+    private String debug = "";
+    private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     public Weapon(Player player){
         dmgMult = 1;
@@ -62,12 +66,12 @@ public class Weapon {
                             y += motion[step++] * reach + player.getHeight();
                             break;
                         case Player.FACING_UP_RIGHT:
-                            x += motion[step] * angleReach;
-                            y += motion[step++] * angleReach;
+                            x += motion[step] * angleReach + player.getWidth() + 10;
+                            y += motion[step++] * angleReach + player.getHeight() / 2;
                             break;
                         case Player.FACING_UP_LEFT:
-                            x -= motion[step] * angleReach;
-                            y += motion[step++] * angleReach;
+                            x -= motion[step] * angleReach - player.getWidth() / 2;
+                            y += motion[step++] * angleReach + player.getHeight() + 10;
                             break;
                         case Player.FACING_RIGHT:
                             x += motion[step++] * reach + player.getWidth();
@@ -80,12 +84,12 @@ public class Weapon {
                             y -= motion[step++] * reach;
                             break;
                         case Player.FACING_DOWN_LEFT:
-                            x -= motion[step] * angleReach;
-                            y -= motion[step++] * angleReach;
+                            x -= motion[step] * angleReach - 10;
+                            y -= motion[step++] * angleReach + player.getHeight() / 2;
                             break;
                         case Player.FACING_DOWN_RIGHT:
-                            x += motion[step] * angleReach;
-                            y -= motion[step++] * angleReach;
+                            x += motion[step] * angleReach + player.getWidth() / 2;
+                            y -= motion[step++] * angleReach + 10;
                             break;
                     }
 
@@ -113,8 +117,8 @@ public class Weapon {
 
                     Enemy b1 = enemies.get(i);
                     boolean rightClear = x > b1.getX() + 45;
-                    boolean belowClear = y < b1.getY() - 45;
-                    boolean leftClear = x < b1.getX() - 45;
+                    boolean belowClear = y < b1.getY() - 10;
+                    boolean leftClear = x < b1.getX() - 10;
                     boolean aboveClear = y > b1.getY() + 45;
 
                     if(!rightClear && !leftClear && !aboveClear && !belowClear) {
@@ -128,6 +132,10 @@ public class Weapon {
                 }
             }
         }
+    }
+
+    public String debug(){
+        return debug;
     }
 
     public void draw(SpriteBatch batch, Vector2 playerPos, Vector2 screenRes){

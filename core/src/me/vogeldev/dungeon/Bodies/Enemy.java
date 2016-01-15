@@ -39,9 +39,6 @@ public class Enemy {
     double angleVel;
     int[] moving;
 
-    boolean isHit;
-
-
     public Enemy(int x, int y, int hp) {
         this.x = x;
         this.y = y;
@@ -61,7 +58,6 @@ public class Enemy {
         textureLeft = textureAtlas.findRegion("enemy_debug_left");
         sprite = textureRight;
 
-        isHit = false;
     }
 
     public void update(Player player) {
