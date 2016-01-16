@@ -15,10 +15,10 @@ import me.vogeldev.dungeon.support.Global;
  */
 public class Enemy {
 
-    public final static int MOVE_UP = 1,
-            MOVE_RIGHT = 2,
-            MOVE_DOWN = 3,
-            MOVE_LEFT = 4;
+    public final static int MOVE_UP = 0,
+            MOVE_RIGHT = 1,
+            MOVE_DOWN = 2,
+            MOVE_LEFT = 3;
 
 
     private ConeSight lineOfSight;
@@ -44,7 +44,7 @@ public class Enemy {
         this.y = y;
         this.hp = hp;
         level = 1;
-        velocity = 5;
+        velocity = 2;
         angleVel = Math.sqrt(Math.pow(velocity, 2) / 2);
         range = Global.RANGE;                                   //The range that an enemy can see.
 
@@ -56,7 +56,9 @@ public class Enemy {
         textureDown = textureAtlas.findRegion("enemy_debug_down");
         textureRight = textureAtlas.findRegion("enemy_debug_right");
         textureLeft = textureAtlas.findRegion("enemy_debug_left");
-        sprite = textureLeft;
+        sprite = textureUp;
+
+        moving = new int[]{0, 0, 0, 0};
 
     }
 
@@ -76,28 +78,111 @@ public class Enemy {
 
         inRange = distance <= range;
 
-        if(sprite == textureUp){
+        if (sprite == textureUp) {
+            lineOfSight.recalcCone(this, 45);
             inSightX = ((player.getX() > lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
             inSightY = ((player.getY() < lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getY() > (y - 50)));
-        }
-
-        else if(sprite == textureDown){
+        } else if (sprite == textureDown) {
             lineOfSight.recalcCone(this, 225);
             inSightX = ((player.getX() < lineOfSight.getaX()) && (player.getX() > lineOfSight.getbX()));
             inSightY = ((player.getY() > lineOfSight.getaY()) && (player.getY() > lineOfSight.getbY()) && (player.getY() < (y + 50)));
-        }
-        else if(sprite == textureRight){
+        } else if (sprite == textureRight) {
             lineOfSight.recalcCone(this, -45);
             inSightX = ((player.getX() < lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
             inSightY = ((player.getY() > lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getX() > (x - 50)));
-        }
-        else if(sprite == textureLeft){
+        } else if (sprite == textureLeft) {
             lineOfSight.recalcCone(this, 135);
             inSightX = ((player.getX() > lineOfSight.getaX()) && (player.getX() > lineOfSight.getbX()));
             inSightY = ((player.getY() > lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getX() < (x + 50)));
         }
 
         inSight = (inSightX && inSightY && inRange);
+
+        if (inSight) {
+            if (player.getX() > x)
+                this.move(MOVE_RIGHT);
+            else
+                this.stop(MOVE_RIGHT);
+
+            if (player.getY() > y)
+                this.move(MOVE_UP);
+            else
+                this.stop(MOVE_UP);
+
+            if (player.getX() < x)
+                this.move(MOVE_LEFT);
+            else
+                this.stop(MOVE_LEFT);
+
+            if (player.getY() < y)
+                this.move(MOVE_DOWN);
+            else
+                this.stop(MOVE_DOWN);
+        }
+
+        if (moving[MOVE_UP] > 0) {
+            if (moving[MOVE_LEFT] > 0) {
+                y += angleVel;
+                x -= angleVel;
+                sprite = textureUp;
+                if(!inSight){
+                    stop(MOVE_UP);
+                    stop(MOVE_LEFT);
+                }
+
+            }else if(moving[MOVE_RIGHT] > 0){
+                y += angleVel;
+                x += angleVel;
+                sprite = textureUp;
+                if(!inSight){
+                    stop(MOVE_UP);
+                    stop(MOVE_RIGHT);
+                }
+            }else {
+                y += velocity;
+                sprite =textureUp;
+                if(!inSight){
+                    stop(MOVE_UP);
+                }
+            }
+        }
+        else if(moving[MOVE_DOWN] > 0) {
+            if (moving[MOVE_LEFT] > 0){
+                y -= angleVel;
+                x -= angleVel;
+                sprite = textureDown;
+                if(!inSight){
+                    stop(MOVE_DOWN);
+                    stop(MOVE_LEFT);
+                }
+            }else if(moving[MOVE_RIGHT] > 0){
+                y -= angleVel;
+                x += angleVel;
+                sprite = textureDown;
+                if(!inSight){
+                    stop(MOVE_DOWN);
+                    stop(MOVE_RIGHT);
+                }
+            }else {
+                y -= velocity;
+                sprite = textureDown;
+                if(!inSight){
+                    stop(MOVE_DOWN);
+                }
+            }
+        }else if(moving[MOVE_RIGHT] > 0) {
+            x += velocity;
+            sprite = textureRight;
+            if(!inSight){
+                stop(MOVE_RIGHT);
+            }
+        }else if(moving[MOVE_LEFT] > 0) {
+            x -= velocity;
+            sprite = textureLeft;
+            if(!inSight){
+                stop(MOVE_LEFT);
+            }
+        }
     }
 
     public void hit(double dmg){
@@ -241,10 +326,19 @@ public class Enemy {
                 bX =  e.getX() - sideB;
                 by = e.getY() + sideB;
             }
-            else{
+            else if (e.sprite == textureDown){
                 sideA = -(Math.sin(Math.toRadians(angle)) * Global.RANGE);
                 aX = e.getX() + sideA;
                 aY = e.getY() - sideA;
+
+                sideB = (Math.sin(Math.toRadians(angle))* Global.RANGE);
+                bX = e.getX() + sideB;
+                by = e.getY() + sideB;
+            }
+            else if (e.sprite == textureUp){
+                sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                aX = e.getX() - sideA;
+                aY = e.getY() + sideA;
 
                 sideB = (Math.sin(Math.toRadians(angle))* Global.RANGE);
                 bX = e.getX() + sideB;

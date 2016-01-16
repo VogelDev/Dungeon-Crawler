@@ -10,4 +10,9 @@ public class Wall extends Enemy {
 
         sprite = textureAtlas.findRegion("wall_debug");
     }
+
+    public void update(Player player){
+
+    }
+
 }

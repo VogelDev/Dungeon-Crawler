@@ -190,7 +190,6 @@ public class Player {
         }else if(moving[MOVE_LEFT]) {
             x -= velocity;
             sprite = playerLeft;
-            facing = FACING_LEFT;
         }
 
         weapon.update(enemies);
