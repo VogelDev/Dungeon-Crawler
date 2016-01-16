@@ -74,21 +74,21 @@ public class ControllerHandler implements ControllerListener {
         // Left Stick
         if(axisCode == XBox360Pad.AXIS_LEFT_X)
             if(value > .25f)
-                player.move(Player.MOVE_RIGHT);
+                player.move(Global.MOVE_RIGHT);
             else if(value < -.25f)
-                player.move(Player.MOVE_LEFT);
+                player.move(Global.MOVE_LEFT);
             else{
-                player.stop(Player.MOVE_LEFT);
-                player.stop(Player.MOVE_RIGHT);
+                player.stop(Global.MOVE_LEFT);
+                player.stop(Global.MOVE_RIGHT);
             }
         if(axisCode == XBox360Pad.AXIS_LEFT_Y)
             if(value > .25f)
-                player.move(Player.MOVE_DOWN);
+                player.move(Global.MOVE_DOWN);
             else if(value < -.25f)
-                player.move(Player.MOVE_UP);
+                player.move(Global.MOVE_UP);
             else{
-                player.stop(Player.MOVE_UP);
-                player.stop(Player.MOVE_DOWN);
+                player.stop(Global.MOVE_UP);
+                player.stop(Global.MOVE_DOWN);
             }
 
         // Right stick
@@ -104,19 +104,19 @@ public class ControllerHandler implements ControllerListener {
 
         // This is the dpad
         if(value == XBox360Pad.BUTTON_DPAD_CENTER){
-            player.stop(Player.MOVE_LEFT);
-            player.stop(Player.MOVE_RIGHT);
-            player.stop(Player.MOVE_UP);
-            player.stop(Player.MOVE_DOWN);
+            player.stop(Global.MOVE_LEFT);
+            player.stop(Global.MOVE_RIGHT);
+            player.stop(Global.MOVE_UP);
+            player.stop(Global.MOVE_DOWN);
         }
         if(value == XBox360Pad.BUTTON_DPAD_LEFT)
-            player.move(Player.MOVE_LEFT);
+            player.move(Global.MOVE_LEFT);
         if(value == XBox360Pad.BUTTON_DPAD_RIGHT)
-            player.move(Player.MOVE_RIGHT);
+            player.move(Global.MOVE_RIGHT);
         if(value == XBox360Pad.BUTTON_DPAD_UP)
-            player.move(Player.MOVE_UP);
+            player.move(Global.MOVE_UP);
         if(value == XBox360Pad.BUTTON_DPAD_DOWN)
-            player.move(Player.MOVE_DOWN);
+            player.move(Global.MOVE_DOWN);
 
         System.out.println(player);
 

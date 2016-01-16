@@ -11,46 +11,17 @@ import java.util.Arrays;
 
 import me.vogeldev.dungeon.Equipment.Weapon;
 import me.vogeldev.dungeon.support.ControllerHandler;
+import me.vogeldev.dungeon.support.Global;
 
 /**
  * Created by Vogel on 1/10/2016.
  */
-public class Player {
+public class Player extends Body{
 
-    public final static int MOVE_UP = 0,
-                            MOVE_RIGHT = 1,
-                            MOVE_DOWN = 2,
-                            MOVE_LEFT = 3,
-                            FACING_UP = 0,
-                            FACING_UP_RIGHT = 1,
-                            FACING_RIGHT = 2,
-                            FACING_DOWN_RIGHT = 3,
-                            FACING_DOWN = 4,
-                            FACING_DOWN_LEFT = 5,
-                            FACING_LEFT = 6,
-                            FACING_UP_LEFT = 7;
-
-    private TextureAtlas playerAtlas;
-    private TextureRegion playerUp;
-    private TextureRegion playerDown;
-    private TextureRegion playerRight;
-    private TextureRegion playerLeft;
-    private TextureRegion playerUpLeft;
-    private TextureRegion playerDownRight;
-    private TextureRegion playerUpRight;
-    private TextureRegion playerDownLeft;
-    private ControllerHandler controller;
-
-    String debug = "";
-    float x, y, screenWidth, screenHeight;
-    double angleVel;
-    int hp, velocity, level, facing, width, height;
-    boolean[] moving;
-    TextureRegion sprite;
-
-    Weapon weapon;
+    ControllerHandler controller;
 
     public Player(float x, float y, int hp, float screenWidth, float screenHeight) {
+        super(x, y, hp, screenWidth, screenHeight);
         this.x = x;
         this.y = y;
         this.hp = hp;
@@ -68,17 +39,16 @@ public class Player {
 
         moving = new boolean[]{false, false, false, false};
 
-        playerAtlas = new TextureAtlas("game_atlas.pack");
-        playerUp = playerAtlas.findRegion("player_debug_up");
-        playerDown = playerAtlas.findRegion("player_debug_down");
-        playerRight = playerAtlas.findRegion("player_debug_right");
-        playerLeft = playerAtlas.findRegion("player_debug_left");
-        playerUpRight = playerAtlas.findRegion("player_debug_up_right");
-        playerDownLeft = playerAtlas.findRegion("player_debug_down_left");
-        playerDownRight = playerAtlas.findRegion("player_debug_down_right");
-        playerUpLeft = playerAtlas.findRegion("player_debug_up_left");
-        sprite = playerUp;
-        facing = FACING_UP;
+        textureUp = textureAtlas.findRegion("player_debug_up");
+        textureDown = textureAtlas.findRegion("player_debug_down");
+        textureRight = textureAtlas.findRegion("player_debug_right");
+        textureLeft = textureAtlas.findRegion("player_debug_left");
+        textureUpRight = textureAtlas.findRegion("player_debug_up_right");
+        textureDownLeft = textureAtlas.findRegion("player_debug_down_left");
+        textureDownRight = textureAtlas.findRegion("player_debug_down_right");
+        textureUpLeft = textureAtlas.findRegion("player_debug_up_left");
+
+        sprite = textureUp;
 
         weapon = new Weapon(this);
     }
@@ -91,25 +61,35 @@ public class Player {
 
         if(!controller.hasControllers()){
             if (Gdx.input.isKeyPressed(Input.Keys.A))
-                move(MOVE_LEFT);
+                move(Global.MOVE_LEFT);
             else
-                stop(MOVE_LEFT);
+                stop(Global.MOVE_LEFT);
             if (Gdx.input.isKeyPressed(Input.Keys.D))
-                move(MOVE_RIGHT);
+                move(Global.MOVE_RIGHT);
             else
-                stop(MOVE_RIGHT);
+                stop(Global.MOVE_RIGHT);
             if (Gdx.input.isKeyPressed(Input.Keys.W))
-                move(MOVE_UP);
+                move(Global.MOVE_UP);
             else
-                stop(MOVE_UP);
+                stop(Global.MOVE_UP);
             if (Gdx.input.isKeyPressed(Input.Keys.S))
-                move(MOVE_DOWN);
+                move(Global.MOVE_DOWN);
             else
-                stop(MOVE_DOWN);
+                stop(Global.MOVE_DOWN);
 
             if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
                 if(!weapon.isAttacking()){
-                    weapon.thrust();
+                    if(atkStart == 0){
+                        atkStart = System.currentTimeMillis();
+                    }
+                }
+            }else{
+                if(atkStart != 0){
+                    if(System.currentTimeMillis() - atkStart > 250)
+                        weapon.swing();
+                    else
+                        weapon.thrust();
+                    atkStart = 0;
                 }
             }
         }
@@ -138,58 +118,59 @@ public class Player {
 
                 if(!rightClear && !leftClear && !aboveClear && !belowClear) {
                     if (x < b1.getX() && y > b1.getY() - 40 && y < b1.getY() + 10)
-                        stop(MOVE_RIGHT);
+                        stop(Global.MOVE_RIGHT);
                     if (x > b1.getX() && y > b1.getY() - 40 && y < b1.getY() + 10)
-                        stop(MOVE_LEFT);
+                        stop(Global.MOVE_LEFT);
                     if (y < b1.getY() && x > b1.getX() - 40 && x < b1.getX() + 10)
-                        stop(MOVE_UP);
+                        stop(Global.MOVE_UP);
                     if (y > b1.getY() && x > b1.getX() - 40 && x < b1.getX() + 10)
-                        stop(MOVE_DOWN);
+                        stop(Global.MOVE_DOWN);
                 }
 
             }
         }
 
         // Make the player move
-        if(moving[MOVE_UP]) {
-            if (moving[MOVE_LEFT]){
-                y += angleVel;
-                x -= angleVel;
-                sprite = playerUpLeft;
-                facing = FACING_UP_LEFT;
-            }else if(moving[MOVE_RIGHT]){
-                y += angleVel;
-                x += angleVel;
-                sprite = playerUpRight;
-                facing = FACING_UP_RIGHT;
-            }else {
-                y += velocity;
-                sprite = playerUp;
-                facing = FACING_UP;
-            }
-        }else if(moving[MOVE_DOWN]) {
-            if (moving[MOVE_LEFT]){
+        if(moving[Global.MOVE_UP]) {
+            if (moving[Global.MOVE_LEFT]){
+            y += angleVel;
+            x -= angleVel;
+            sprite = textureUpLeft;
+            facing = Global.FACING_UP_LEFT;
+        }else if(moving[Global.MOVE_RIGHT]){
+            y += angleVel;
+            x += angleVel;
+            sprite = textureUpRight;
+            facing = Global.FACING_UP_RIGHT;
+        }else {
+            y += velocity;
+            sprite = textureUp;
+            facing = Global.FACING_UP;
+        }
+        }else if(moving[Global.MOVE_DOWN]) {
+            if (moving[Global.MOVE_LEFT]){
                 y -= angleVel;
                 x -= angleVel;
-                sprite = playerDownLeft;
-                facing = FACING_DOWN_LEFT;
-            }else if(moving[MOVE_RIGHT]){
+                sprite = textureDownLeft;
+                facing = Global.FACING_DOWN_LEFT;
+            }else if(moving[Global.MOVE_RIGHT]){
                 y -= angleVel;
                 x += angleVel;
-                sprite = playerDownRight;
-                facing = FACING_DOWN_RIGHT;
+                sprite = textureDownRight;
+                facing = Global.FACING_DOWN_RIGHT;
             }else {
                 y -= velocity;
-                sprite = playerDown;
-                facing = FACING_DOWN;
+                sprite = textureDown;
+                facing = Global.FACING_DOWN;
             }
-        }else if(moving[MOVE_RIGHT]) {
+        }else if(moving[Global.MOVE_RIGHT]) {
             x += velocity;
-            sprite = playerRight;
-            facing = FACING_RIGHT;
-        }else if(moving[MOVE_LEFT]) {
+            sprite = textureRight;
+            facing = Global.FACING_RIGHT;
+        }else if(moving[Global.MOVE_LEFT]) {
             x -= velocity;
-            sprite = playerLeft;
+            sprite = textureLeft;
+            facing = Global.FACING_LEFT;
         }
 
         weapon.update(enemies);
@@ -214,74 +195,8 @@ public class Player {
     }
 
     public void draw(SpriteBatch batch){
+        if(weapon.isAttacking())
+            weapon.draw(batch, x, y, screenWidth, screenHeight);
         batch.draw(sprite, screenWidth / 2, screenHeight / 2, sprite.getRegionWidth(), sprite.getRegionHeight());
-    }
-
-    public void move(int dir){
-        moving[dir] = true;
-    }
-
-    public void stop(int dir){
-        moving[dir] = false;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public float getScreenWidth() {
-        return screenWidth;
-    }
-
-    public float getScreenHeight() {
-        return screenHeight;
-    }
-
-    public Weapon getWeapon() {
-        return weapon;
     }
 }

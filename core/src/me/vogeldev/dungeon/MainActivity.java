@@ -89,9 +89,6 @@ public class MainActivity extends ApplicationAdapter {
 
 		player.getWeapon().update(enemies);
 
-		if(player.getWeapon().isAttacking())
-			player.getWeapon().draw(batch, playerPos, screenRes);
-
 		player.draw(batch);
 
         /*

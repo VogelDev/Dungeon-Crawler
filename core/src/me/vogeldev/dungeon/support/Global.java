@@ -7,6 +7,19 @@ import com.badlogic.gdx.Input;
  */
 public class Global {
 
+    public final static int MOVE_UP = 0,
+                            MOVE_RIGHT = 1,
+                            MOVE_DOWN = 2,
+                            MOVE_LEFT = 3,
+                            FACING_UP = 0,
+                            FACING_UP_RIGHT = 1,
+                            FACING_RIGHT = 2,
+                            FACING_DOWN_RIGHT = 3,
+                            FACING_DOWN = 4,
+                            FACING_DOWN_LEFT = 5,
+                            FACING_LEFT = 6,
+                            FACING_UP_LEFT = 7;
+
     //Move left
     public static final int KEYBOARD_LEFT = Input.Keys.A;
     public static final int CONTROLLER_LEFT = XBox360Pad.AXIS_LEFT_X;
