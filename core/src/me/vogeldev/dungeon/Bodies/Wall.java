@@ -5,8 +5,8 @@ package me.vogeldev.dungeon.Bodies;
  */
 public class Wall extends Enemy {
 
-    public Wall(int x, int y, int hp) {
-        super(x, y, hp);
+    public Wall(int x, int y, int hp, float screenWidth, float screenHeight) {
+        super(x, y, hp, screenWidth, screenHeight);
 
         sprite = textureAtlas.findRegion("wall_debug");
     }

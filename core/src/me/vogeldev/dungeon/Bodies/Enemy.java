@@ -13,20 +13,11 @@ import me.vogeldev.dungeon.support.Global;
 /**
  * Created by Vogel on 1/12/2016.
  */
-public class Enemy {
-
-    public final static int MOVE_UP = 0,
-            MOVE_RIGHT = 1,
-            MOVE_DOWN = 2,
-            MOVE_LEFT = 3;
+public class Enemy extends Body{
 
 
     private ConeSight lineOfSight;
-    protected TextureAtlas textureAtlas;
-    private TextureRegion textureUp;
-    private TextureRegion textureDown;
-    private TextureRegion textureRight;
-    private TextureRegion textureLeft;
+
     TextureRegion sprite;
 
     private boolean inRange;
@@ -37,9 +28,9 @@ public class Enemy {
     private boolean inSightY;
     int x, y, hp, velocity, level, range;
     double angleVel;
-    int[] moving;
 
-    public Enemy(int x, int y, int hp) {
+    public Enemy(int x, int y, int hp, float screenWidth, float screenHeight) {
+        super(x, y, hp, screenWidth, screenHeight);
         this.x = x;
         this.y = y;
         this.hp = hp;
@@ -50,15 +41,19 @@ public class Enemy {
 
         double t = Math.acos(34);
 
+        moving = new boolean[]{false, false, false, false};
+
         lineOfSight = new ConeSight(this, Global.RANGE, Global.RANGE, 45);
         textureAtlas = new TextureAtlas("game_atlas.pack");
         textureUp = textureAtlas.findRegion("enemy_debug_up");
         textureDown = textureAtlas.findRegion("enemy_debug_down");
         textureRight = textureAtlas.findRegion("enemy_debug_right");
         textureLeft = textureAtlas.findRegion("enemy_debug_left");
+        textureUpRight = textureAtlas.findRegion("enemy_debug_up_right");
+        textureDownLeft = textureAtlas.findRegion("enemy_debug_down_left");
+        textureDownRight = textureAtlas.findRegion("enemy_debug_down_right");
+        textureUpLeft = textureAtlas.findRegion("enemy_debug_up_left");
         sprite = textureUp;
-
-        moving = new int[]{0, 0, 0, 0};
 
     }
 
@@ -99,91 +94,71 @@ public class Enemy {
         inSight = (inSightX && inSightY && inRange);
 
         if (inSight) {
-            if (player.getX() > x)
-                this.move(MOVE_RIGHT);
+            if (player.getX() > x + 50)
+                this.move(Global.MOVE_RIGHT);
             else
-                this.stop(MOVE_RIGHT);
+                this.stop(Global.MOVE_RIGHT);
 
-            if (player.getY() > y)
-                this.move(MOVE_UP);
+            if (player.getY() > y + 50)
+                this.move(Global.MOVE_UP);
             else
-                this.stop(MOVE_UP);
+                this.stop(Global.MOVE_UP);
 
-            if (player.getX() < x)
-                this.move(MOVE_LEFT);
+            if (player.getX() < x - 50)
+                this.move(Global.MOVE_LEFT);
             else
-                this.stop(MOVE_LEFT);
+                this.stop(Global.MOVE_LEFT);
 
-            if (player.getY() < y)
-                this.move(MOVE_DOWN);
+            if (player.getY() < y - 50)
+                this.move(Global.MOVE_DOWN);
             else
-                this.stop(MOVE_DOWN);
+                this.stop(Global.MOVE_DOWN);
         }
 
-        if (moving[MOVE_UP] > 0) {
-            if (moving[MOVE_LEFT] > 0) {
+        // Make the enemy move
+        if(moving[Global.MOVE_UP]) {
+            if (moving[Global.MOVE_LEFT]){
                 y += angleVel;
                 x -= angleVel;
-                sprite = textureUp;
-                if(!inSight){
-                    stop(MOVE_UP);
-                    stop(MOVE_LEFT);
-                }
-
-            }else if(moving[MOVE_RIGHT] > 0){
+                sprite = textureUpLeft;
+                facing = Global.FACING_UP_LEFT;
+            }else if(moving[Global.MOVE_RIGHT]){
                 y += angleVel;
                 x += angleVel;
-                sprite = textureUp;
-                if(!inSight){
-                    stop(MOVE_UP);
-                    stop(MOVE_RIGHT);
-                }
+                sprite = textureUpRight;
+                facing = Global.FACING_UP_RIGHT;
             }else {
                 y += velocity;
-                sprite =textureUp;
-                if(!inSight){
-                    stop(MOVE_UP);
-                }
+                sprite = textureUp;
+                facing = Global.FACING_UP;
             }
-        }
-        else if(moving[MOVE_DOWN] > 0) {
-            if (moving[MOVE_LEFT] > 0){
+        }else if(moving[Global.MOVE_DOWN]) {
+            if (moving[Global.MOVE_LEFT]){
                 y -= angleVel;
                 x -= angleVel;
-                sprite = textureDown;
-                if(!inSight){
-                    stop(MOVE_DOWN);
-                    stop(MOVE_LEFT);
-                }
-            }else if(moving[MOVE_RIGHT] > 0){
+                sprite = textureDownLeft;
+                facing = Global.FACING_DOWN_LEFT;
+            }else if(moving[Global.MOVE_RIGHT]){
                 y -= angleVel;
                 x += angleVel;
-                sprite = textureDown;
-                if(!inSight){
-                    stop(MOVE_DOWN);
-                    stop(MOVE_RIGHT);
-                }
+                sprite = textureDownRight;
+                facing = Global.FACING_DOWN_RIGHT;
             }else {
                 y -= velocity;
                 sprite = textureDown;
-                if(!inSight){
-                    stop(MOVE_DOWN);
-                }
+                facing = Global.FACING_DOWN;
             }
-        }else if(moving[MOVE_RIGHT] > 0) {
+        }else if(moving[Global.MOVE_RIGHT]) {
             x += velocity;
             sprite = textureRight;
-            if(!inSight){
-                stop(MOVE_RIGHT);
-            }
-        }else if(moving[MOVE_LEFT] > 0) {
+            facing = Global.FACING_RIGHT;
+        }else if(moving[Global.MOVE_LEFT]) {
             x -= velocity;
             sprite = textureLeft;
-            if(!inSight){
-                stop(MOVE_LEFT);
-            }
+            facing = Global.FACING_LEFT;
         }
-    }
+        }
+
 
     public void hit(double dmg){
         hp -= dmg;
@@ -203,45 +178,7 @@ public class Enemy {
         batch.draw(sprite, x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, sprite.getRegionWidth(), sprite.getRegionHeight());
     }
 
-    public void move(int dir){
-        moving[dir] = velocity;
-    }
 
-    public void stop(int dir){
-        moving[dir] = 0;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
 
     public boolean isInRange() {
         return inRange;

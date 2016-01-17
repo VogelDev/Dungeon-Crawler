@@ -64,8 +64,8 @@ public class MainActivity extends ApplicationAdapter {
 
 
         for(int i = 0; i < 2; i++){
-			enemies.add(new Wall(100, i * 50, 10));
-			enemies.add(new Enemy(-100, i * 50, 5));
+			enemies.add(new Wall(100, i * 50, 10, screenRes.x, screenRes.y));
+			enemies.add(new Enemy(-100, i * 50, 5, screenRes.x, screenRes.y));
         }
 
 	}
