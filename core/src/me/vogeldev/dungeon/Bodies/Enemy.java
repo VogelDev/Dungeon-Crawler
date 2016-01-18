@@ -3,6 +3,7 @@ package me.vogeldev.dungeon.Bodies;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.Arrays;
@@ -26,8 +27,6 @@ public class Enemy extends Body{
 
     private boolean inSightX;
     private boolean inSightY;
-    int x, y, hp, velocity, level, range;
-    double angleVel;
 
     public Enemy(int x, int y, int hp, float screenWidth, float screenHeight) {
         super(x, y, hp, screenWidth, screenHeight);
@@ -157,16 +156,11 @@ public class Enemy extends Body{
             sprite = textureLeft;
             facing = Global.FACING_LEFT;
         }
-        }
-
-
-    public void hit(double dmg){
-        hp -= dmg;
     }
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "Enemy{" +
                 "x=" + x +
                 ", y=" + y +
                 ", hp=" + hp +
@@ -175,10 +169,14 @@ public class Enemy extends Body{
     }
 
     public void draw(SpriteBatch batch, Vector2 playerPos, Vector2 screenRes){
+
         batch.draw(sprite, x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, sprite.getRegionWidth(), sprite.getRegionHeight());
+
     }
 
-
+    public void shape(ShapeRenderer shape, Vector2 playerPos, Vector2 screenRes){
+        shape.rect(x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, 50, 50);
+    }
 
     public boolean isInRange() {
         return inRange;
@@ -210,8 +208,6 @@ public class Enemy extends Body{
 
     public class ConeSight{
 
-
-
         private double sideA;
         private double aX;
         private double aY;
@@ -219,8 +215,6 @@ public class Enemy extends Body{
         private double sideB;
         private double bX;
         private double by;
-
-
 
         private int angle;
 
@@ -284,14 +278,6 @@ public class Enemy extends Body{
 
 
 
-        }
-
-        public int getAngle() {
-            return angle;
-        }
-
-        public void setAngle(int angle) {
-            this.angle = angle;
         }
 
         public double getaX() {
