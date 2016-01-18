@@ -230,8 +230,8 @@ public class Enemy extends Body {
         e.setWidth(e.getWidth() * offset);
         e.setHeight(e.getHeight() * offset);
 
-        super.setRange(Global.RANGE * (e.getLevel() / (wielder.getLevel() - offsetMultiplier - .5f)));
-
+        //super.setRange(Global.RANGE * (e.getLevel() / (wielder.getLevel() - offsetMultiplier - .5f)));
+        range = Global.RANGE * (e.getLevel() / (wielder.getLevel() - offsetMultiplier - .5f));
     }
 
     public void hit(double dmg) {

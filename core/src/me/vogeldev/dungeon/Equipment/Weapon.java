@@ -120,15 +120,6 @@ public class  Weapon {
                 if (collisionCheck(b1)) {
                     if(wielder.xpGain(Global.XP_PER_KILL * b1.getLevel() / wielder.getLevel())){
                         for(Enemy e: enemies) {
-<<<<<<< HEAD
-                            float offset = (float)e.getLevel() / wielder.getLevel();
-=======
-                            /*float offset = (float) e.getLevel() / wielder.getLevel();
->>>>>>> origin/master
-                            e.setX(e.getX() * offset);
-                            e.setY(e.getY() *offset);
-                            e.setWidth(e.getWidth() * offset);
-                            e.setHeight(e.getHeight() * offset);*/
 
                             e.shrink(e, wielder);
                         }
@@ -162,9 +153,7 @@ public class  Weapon {
         boolean aboveClear = y > body.getY() + body.getWidth() - 5;
 
         if(!rightClear && !leftClear && !aboveClear && !belowClear) {
-            System.out.println("made contact: " + madeContact);
             if(!madeContact){
-                System.out.println("hit: " + System.currentTimeMillis());
                 //If thrusting only hit first enemy, do normal damage
                 //If bludgeoning or piercing weapon (i.e. mace, dagger, axe) only hit first enemy, do damage plus half
                 //If slicing weapon (i.e sword) hit all enemies on the arc, do reduced damage.
@@ -177,6 +166,7 @@ public class  Weapon {
                         madeContact = true;
                     }else{
                         body.hit(dmgMult * .8f);
+                        System.out.println(dmgMult * .25f);
                     }
                 }
             }
