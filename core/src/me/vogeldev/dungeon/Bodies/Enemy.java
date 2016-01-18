@@ -27,6 +27,9 @@ public class Enemy extends Body {
     private boolean inSightX;
     private boolean inSightY;
 
+
+
+
     public Enemy(int x, int y, int hp, float screenWidth, float screenHeight) {
         super(x, y, hp, screenWidth, screenHeight);
         this.x = x;
@@ -51,7 +54,7 @@ public class Enemy extends Body {
         textureDownLeft = textureAtlas.findRegion("enemy_debug_down_left");
         textureDownRight = textureAtlas.findRegion("enemy_debug_down_right");
         textureUpLeft = textureAtlas.findRegion("enemy_debug_up_left");
-        sprite = textureDownLeft;
+        sprite = textureLeft;
 
         weapon = new Weapon(this);
 
@@ -75,7 +78,27 @@ public class Enemy extends Body {
 
         checkInSight(player, distance);
 
+        facePlayer(player, inSight);
+
+
         makeMove(player, inSight);
+    }
+
+    private void facePlayer(Player player, boolean inSight) {
+
+        if(inSight){
+            if(player.getX() > x)
+                sprite = textureRight;
+
+            else if(player.getX() < x)
+                sprite = textureLeft;
+
+            else if(player.getY()> y)
+                sprite = textureUp;
+
+            else if(player.getY()< y)
+                sprite = textureDown;
+        }
     }
 
     private void checkInSight(Player player, double distance) {
@@ -121,26 +144,35 @@ public class Enemy extends Body {
     private void makeMove(Player player, boolean inSight){
 
         if (inSight) {
-            if (player.getX() > x + 50)
+            if (player.getX() >= x + 50) {
                 this.move(Global.MOVE_RIGHT);
+                this.setSprite(textureRight);
+            }
             else
                 this.stop(Global.MOVE_RIGHT);
 
-            if (player.getY() > y + 50)
+            if (player.getY() >= y + 50) {
                 this.move(Global.MOVE_UP);
+                this.setSprite(textureUp);
+            }
             else
                 this.stop(Global.MOVE_UP);
 
-            if (player.getX() < x - 50)
+            if (player.getX() <= x - 50) {
                 this.move(Global.MOVE_LEFT);
+                this.setSprite(textureLeft);
+            }
             else
                 this.stop(Global.MOVE_LEFT);
 
-            if (player.getY() < y - 50)
+            if (player.getY() <= y - 50) {
                 this.move(Global.MOVE_DOWN);
+                this.setSprite(textureDown);
+            }
             else
                 this.stop(Global.MOVE_DOWN);
-        } else {
+        }
+        else {
             this.stop(Global.MOVE_RIGHT);
             this.stop(Global.MOVE_LEFT);
             this.stop(Global.MOVE_UP);
@@ -245,6 +277,10 @@ public class Enemy extends Body {
 
     public double getDistance() {
         return distance;
+    }
+
+    public void setSprite(TextureRegion sprite) {
+        this.sprite = sprite;
     }
 
     public class ConeSight{
