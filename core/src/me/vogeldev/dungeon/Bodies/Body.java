@@ -2,11 +2,8 @@ package me.vogeldev.dungeon.Bodies;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 
 import me.vogeldev.dungeon.Equipment.Weapon;
-import me.vogeldev.dungeon.support.ControllerHandler;
 import me.vogeldev.dungeon.support.Global;
 
 /**
@@ -27,7 +24,13 @@ public class Body {
     protected String debug = "";
     protected float x, y, width, height, screenWidth, screenHeight;
     protected double angleVel;
-    protected int hp, velocity, range, level, xp, facing;
+    protected int hp;
+    protected int velocity;
+
+    protected double range;
+    protected int level;
+    protected int xp;
+    protected int facing;
     protected long atkStart;
 
     protected boolean[] moving;
@@ -170,6 +173,10 @@ public class Body {
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public void setRange(double range) {
+        this.range = range;
     }
 
     public void hit(double dmg){

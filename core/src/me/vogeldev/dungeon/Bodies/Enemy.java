@@ -80,7 +80,6 @@ public class Enemy extends Body {
 
         facePlayer(player, inSight);
 
-
         makeMove(player, inSight);
     }
 
@@ -221,6 +220,18 @@ public class Enemy extends Body {
             sprite = textureLeft;
             facing = Global.FACING_LEFT;
         }
+    }
+
+    public void shrink(Enemy e, Body wielder) {
+        float offsetMultiplier = wielder.getLevel() * .05f;
+        float offset = (float) e.getLevel() / (wielder.getLevel() - offsetMultiplier - .5f);
+        e.setX(e.getX() * offset);
+        e.setY(e.getY() * offset);
+        e.setWidth(e.getWidth() * offset);
+        e.setHeight(e.getHeight() * offset);
+
+        super.setRange(Global.RANGE * (e.getLevel() / (wielder.getLevel() - offsetMultiplier - .5f)));
+
     }
 
     public void hit(double dmg) {
@@ -377,74 +388,74 @@ public class Enemy extends Body {
         protected void recalcCone(Enemy e, int angle){
 
             if(e.sprite == textureRight){
-                sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideA = (Math.sin(Math.toRadians(angle)) * range);
                 aX = e.getX() + sideA;
                 aY = e.getY() + sideA;
 
-                sideB = (Math.sin(Math.toRadians(angle))* Global.RANGE);
+                sideB = (Math.sin(Math.toRadians(angle))* range);
                 bX =  e.getX() + sideB;
                 by = e.getY() - sideB;
             }
 
             else if(e.sprite == textureLeft){
-                sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideA = (Math.sin(Math.toRadians(angle)) * range);
                 aX = e.getX() - sideA;
                 aY = e.getY() - sideA;
 
-                sideB = (Math.sin(Math.toRadians(angle))* Global.RANGE);
+                sideB = (Math.sin(Math.toRadians(angle))* range);
                 bX =  e.getX() - sideB;
                 by = e.getY() + sideB;
             }
             else if (e.sprite == textureDown){
-                sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideA = (Math.sin(Math.toRadians(angle)) * range);
                 aX = e.getX() + sideA;
                 aY = e.getY() - sideA;
 
-                sideB = (Math.sin(Math.toRadians(angle))* Global.RANGE);
+                sideB = (Math.sin(Math.toRadians(angle))* range);
                 bX = e.getX() - sideB;
                 by = e.getY() - sideB;
             }
             else if (e.sprite == textureUp){
-                sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideA = (Math.sin(Math.toRadians(angle)) * range);
                 aX = e.getX() - sideA;
                 aY = e.getY() + sideA;
 
-                sideB = (Math.sin(Math.toRadians(angle))* Global.RANGE);
+                sideB = (Math.sin(Math.toRadians(angle)) * range);
                 bX = e.getX() + sideB;
                 by = e.getY() + sideB;
             }
             else if (e.sprite == textureUpRight){
-                sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideA = (Math.sin(Math.toRadians(angle)) * range);
                 aX = e.getX();
                 aY = e.getY() + sideA;
 
-                sideB = (Math.sin(Math.toRadians(angle))* Global.RANGE);
+                sideB = (Math.sin(Math.toRadians(angle))* range);
                 bX = e.getX() + sideB;
                 by = e.getY();
             }
             else if (e.sprite == textureUpLeft) {
-                sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideA = (Math.sin(Math.toRadians(angle)) * range);
                 aX = e.getX() - sideA;
                 aY = e.getY();
 
-                sideB = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideB = (Math.sin(Math.toRadians(angle)) * range);
                 bX = e.getX();
                 by = e.getY() + sideB;
             }else if (e.sprite == textureDownRight) {
-                sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideA = (Math.sin(Math.toRadians(angle)) * range);
                 aX = e.getX() + sideA;
                 aY = e.getY();
 
-                sideB = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideB = (Math.sin(Math.toRadians(angle)) * range);
                 bX =  e.getX();
                 by = e.getY() - sideB;
 
             }else if (e.sprite == textureDownLeft) {
-                sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideA = (Math.sin(Math.toRadians(angle)) * range);
                 aX = e.getX();
                 aY = e.getY() - sideA;
 
-                sideB = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
+                sideB = (Math.sin(Math.toRadians(angle)) * range);
                 bX = e.getX() - sideB;
                 by = e.getY();
             }
