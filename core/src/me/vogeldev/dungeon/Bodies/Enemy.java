@@ -18,13 +18,8 @@ public class Enemy extends Body{
 
 
     private ConeSight lineOfSight;
-
-    TextureRegion sprite;
-
     private boolean inRange;
-
     private boolean inSight;
-
     private boolean inSightX;
     private boolean inSightY;
 
