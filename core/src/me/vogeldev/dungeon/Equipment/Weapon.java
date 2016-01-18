@@ -18,21 +18,31 @@ import me.vogeldev.dungeon.support.Global;
  */
 public class  Weapon {
 
-    double dmgMult, angleReach, atkAngle;
-    float x, y, width;
-    int step, reach;
-    Body wielder;
-    private TextureAtlas weaponAtlas;
-    private TextureRegion sprite;
-    private boolean isAttacking, atkType, madeContact;
-    private float[] motion;
+    protected double dmgMult, angleReach, atkAngle, speed;
+    protected float x, y, width;
+    protected int step, reach;
+    protected Body wielder;
+    protected TextureAtlas weaponAtlas;
+    protected TextureRegion sprite;
+    protected boolean isAttacking, atkType, slicing, madeContact;
+    protected float[] motion;
 
     private String debug = "";
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
+    public Weapon(){
+        init();
+        setSpeed(1);
+    }
+
     public Weapon(Body wielder){
-        dmgMult = 1;
         this.wielder = wielder;
+        init();
+        setSpeed(1);
+    }
+
+    private void init(){
+        dmgMult = 1;
 
         isAttacking = false;
         atkType = false;
@@ -40,12 +50,17 @@ public class  Weapon {
         width = Global.WEAPON_WIDTH;
         angleReach = Math.sqrt(Math.pow(reach, 2) / 2);
         atkAngle = 4 * Math.PI;
-        motion = new float[20];
+        slicing = true;
 
         weaponAtlas = new TextureAtlas("game_atlas.pack");
         sprite = weaponAtlas.findRegion("weapon_debug");
+
     }
 
+    protected void setSpeed(double speed){
+        this.speed = speed;
+        motion = new float[(int)(20 * speed)];
+    }
     private void update(){
 
         x = wielder.getX();
@@ -146,7 +161,6 @@ public class  Weapon {
      */
     public boolean collisionCheck(Body body){
 
-
         boolean rightClear = x > body.getX() + body.getWidth() - 5;
         boolean belowClear = y < body.getY() - width;
         boolean leftClear = x < body.getX() - width;
@@ -158,15 +172,14 @@ public class  Weapon {
                 //If bludgeoning or piercing weapon (i.e. mace, dagger, axe) only hit first enemy, do damage plus half
                 //If slicing weapon (i.e sword) hit all enemies on the arc, do reduced damage.
                 if(atkType) {
-                    body.hit(dmgMult);
+                    body.hit(dmgMult * wielder.getLevel() / body.getLevel());
                     madeContact = true;
                 }else{
-                    if(false){
+                    if(slicing){
+                        body.hit(dmgMult * .25f * wielder.getLevel() / body.getLevel());
+                    }else{
                         body.hit(dmgMult * 1.5);
                         madeContact = true;
-                    }else{
-                        body.hit(dmgMult * .8f);
-                        System.out.println(dmgMult * .25f);
                     }
                 }
             }
