@@ -68,7 +68,7 @@ public class MainActivity extends ApplicationAdapter {
 
         enemies = new ArrayList<Enemy>();
 
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 50; i++){
 			enemies.add(new Wall(100, i * 50, 10, screenRes.x, screenRes.y));
 			enemies.add(new Enemy(-100, i * 50, 5, screenRes.x, screenRes.y));
         }
