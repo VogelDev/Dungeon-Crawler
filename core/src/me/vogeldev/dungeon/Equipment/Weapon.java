@@ -120,7 +120,7 @@ public class  Weapon {
                 if (collisionCheck(b1)) {
                     if(wielder.xpGain(Global.XP_PER_KILL * b1.getLevel() / wielder.getLevel())){
                         for(Enemy e: enemies) {
-                            float offset = e.getLevel() / wielder.getLevel();
+                            float offset = (float)e.getLevel() / wielder.getLevel();
                             e.setX(e.getX() * offset);
                             e.setY(e.getY() *offset);
                             e.setWidth(e.getWidth() * offset);
