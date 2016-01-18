@@ -96,7 +96,8 @@ public class MainActivity extends ApplicationAdapter {
 		player.getWeapon().update(enemies);
 
 		batch.begin();
-		font.draw(batch, playerPos.x + ", " + playerPos.y, 0, screenRes.y - 50);
+		font.draw(batch, "Level: " + player.getLevel() + ", XP: " + player.getXP(), 0, screenRes.y);
+		font.draw(batch, playerPos.x + ", " + playerPos.y, 0, screenRes.y - 20);
 
 		for(Enemy e : enemies){
 			e.update(player);

@@ -118,7 +118,15 @@ public class  Weapon {
                 Enemy b1 = enemies.get(i);
 
                 if (collisionCheck(b1)) {
-                    wielder.xpGain(Global.XP_PER_KILL * b1.getLevel() / wielder.getLevel());
+                    if(wielder.xpGain(Global.XP_PER_KILL * b1.getLevel() / wielder.getLevel())){
+                        for(Enemy e: enemies) {
+                            float offset = e.getLevel() / wielder.getLevel();
+                            e.setX(e.getX() * offset);
+                            e.setY(e.getY() *offset);
+                            e.setWidth(e.getWidth() * offset);
+                            e.setHeight(e.getHeight() * offset);
+                        }
+                    }
                     enemies.remove(b1);
                 }
             }
@@ -146,12 +154,6 @@ public class  Weapon {
         boolean belowClear = y < body.getY() - width;
         boolean leftClear = x < body.getX() - width;
         boolean aboveClear = y > body.getY() + body.getWidth() - 5;
-
-        System.out.println("checking collision");
-        System.out.println("rightClear:" + rightClear);
-        System.out.println("belowClear:" + belowClear);
-        System.out.println("leftClear:" + leftClear);
-        System.out.println("aboveClear:" + aboveClear);
 
         if(!rightClear && !leftClear && !aboveClear && !belowClear) {
             System.out.println("made contact: " + madeContact);

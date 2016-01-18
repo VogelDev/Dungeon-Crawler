@@ -25,9 +25,9 @@ public class Body {
     protected TextureRegion textureDownLeft;
 
     protected String debug = "";
-    protected float x, y, screenWidth, screenHeight;
+    protected float x, y, width, height, screenWidth, screenHeight;
     protected double angleVel;
-    protected int hp, velocity, range, level, xp, facing, width, height;
+    protected int hp, velocity, range, level, xp, facing;
     protected long atkStart;
 
     protected boolean[] moving;
@@ -148,19 +148,19 @@ public class Body {
         this.facing = facing;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(float width) {
         this.width = width;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(float height) {
         this.height = height;
     }
 
@@ -176,12 +176,18 @@ public class Body {
         hp -= dmg;
     }
 
-    public void xpGain(int xp){
+    public boolean xpGain(int xp){
         this.xp += xp;
 
-        if(xp / Global.XP_TNL == level){
+        if(this.xp / Global.XP_TNL == level){
             level++;
+            return true;
         }
+
+        return false;
     }
 
+    public int getXP() {
+        return xp;
+    }
 }

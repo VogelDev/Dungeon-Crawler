@@ -76,10 +76,6 @@ public class Enemy extends Body {
         checkInSight(player, distance);
 
         makeMove(player, inSight);
-
-
-        super.setX(x);
-        super.setY(y);
     }
 
     private void checkInSight(Player player, double distance) {
@@ -212,11 +208,11 @@ public class Enemy extends Body {
 
     public void draw(SpriteBatch batch, Vector2 playerPos, Vector2 screenRes) {
 
-        batch.draw(sprite, x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, sprite.getRegionWidth(), sprite.getRegionHeight());
+        batch.draw(sprite, x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, width, height);
     }
 
     public void shape(ShapeRenderer shape, Vector2 playerPos, Vector2 screenRes) {
-        shape.rect(x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, 50, 50);
+        shape.rect(x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, width, height);
     }
 
     public boolean isInRange() {
@@ -467,7 +463,6 @@ public class Enemy extends Body {
         public void setSideB(double sideB) {
             this.sideB = sideB;
         }
-
 
     }
 }
