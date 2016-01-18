@@ -3,6 +3,7 @@ package me.vogeldev.dungeon.Bodies;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.Arrays;
@@ -14,7 +15,7 @@ import me.vogeldev.dungeon.support.Global;
 /**
  * Created by Vogel on 1/12/2016.
  */
-public class Enemy extends Body{
+public class Enemy extends Body {
 
     private ConeSight lineOfSight;
 
@@ -27,8 +28,6 @@ public class Enemy extends Body{
 
     private boolean inSightX;
     private boolean inSightY;
-    int x, y, hp, velocity, level, range;
-    double angleVel;
 
     public Enemy(int x, int y, int hp, float screenWidth, float screenHeight) {
         super(x, y, hp, screenWidth, screenHeight);
@@ -82,32 +81,27 @@ public class Enemy extends Body{
             lineOfSight.recalcCone(this, 45);
             inSightX = ((player.getX() > lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
             inSightY = ((player.getY() < lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getY() > y));
-        }else if(sprite == textureUpRight){
+        } else if (sprite == textureUpRight) {
             lineOfSight.recalcCone(this, 45);
             inSightX = ((player.getX() > lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
             inSightY = ((player.getY() < lineOfSight.getaY()) && (player.getY() > lineOfSight.getbY()) && (player.getY() > y));
-        }
-        else if(sprite == textureUpLeft){
+        } else if (sprite == textureUpLeft) {
             lineOfSight.recalcCone(this, 45);
             inSightX = ((player.getX() > lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()));
             inSightY = ((player.getY() > lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getY() > y));
-        }
-        else if (sprite == textureDown) {
+        } else if (sprite == textureDown) {
             lineOfSight.recalcCone(this, 45);
             inSightX = ((player.getX() < lineOfSight.getaX()) && (player.getX() > lineOfSight.getbX()) && (player.getY() < y));
             inSightY = ((player.getY() > lineOfSight.getaY()) && (player.getY() > lineOfSight.getbY()));
-        }
-        else if (sprite == textureDownRight){
+        } else if (sprite == textureDownRight) {
             lineOfSight.recalcCone(this, 45);
             inSightX = ((player.getX() < lineOfSight.getaX()) && (player.getX() > lineOfSight.getbX()));
             inSightY = ((player.getY() < lineOfSight.getaY()) && (player.getY() > lineOfSight.getbY()) && (player.getY() < y));
-        }
-        else if (sprite == textureDownLeft){
+        } else if (sprite == textureDownLeft) {
             lineOfSight.recalcCone(this, 45);
             inSightX = ((player.getX() < lineOfSight.getaX()) && (player.getX() > lineOfSight.getbX()));
             inSightY = ((player.getY() > lineOfSight.getaY()) && (player.getY() < lineOfSight.getbY()) && (player.getY() < y));
-        }
-        else if (sprite == textureRight) {
+        } else if (sprite == textureRight) {
             lineOfSight.recalcCone(this, 45);
             inSightX = ((player.getX() < lineOfSight.getaX()) && (player.getX() < lineOfSight.getbX()) && (player.getX() > x));
             inSightY = ((player.getY() < lineOfSight.getaY()) && (player.getY() > lineOfSight.getbY()));
@@ -139,8 +133,7 @@ public class Enemy extends Body{
                 this.move(Global.MOVE_DOWN);
             else
                 this.stop(Global.MOVE_DOWN);
-        }
-        else{
+        } else {
             this.stop(Global.MOVE_RIGHT);
             this.stop(Global.MOVE_LEFT);
             this.stop(Global.MOVE_UP);
@@ -148,58 +141,60 @@ public class Enemy extends Body{
         }
 
         // Make the enemy move
-        if(moving[Global.MOVE_UP]) {
-            if (moving[Global.MOVE_LEFT]){
+        if (moving[Global.MOVE_UP]) {
+            if (moving[Global.MOVE_LEFT]) {
                 y += angleVel;
                 x -= angleVel;
                 sprite = textureUpLeft;
                 facing = Global.FACING_UP_LEFT;
-            }else if(moving[Global.MOVE_RIGHT]){
+            } else if (moving[Global.MOVE_RIGHT]) {
                 y += angleVel;
                 x += angleVel;
                 sprite = textureUpRight;
                 facing = Global.FACING_UP_RIGHT;
-            }else {
+            } else {
                 y += velocity;
                 sprite = textureUp;
                 facing = Global.FACING_UP;
             }
-        }else if(moving[Global.MOVE_DOWN]) {
-            if (moving[Global.MOVE_LEFT]){
+        } else if (moving[Global.MOVE_DOWN]) {
+            if (moving[Global.MOVE_LEFT]) {
                 y -= angleVel;
                 x -= angleVel;
                 sprite = textureDownLeft;
                 facing = Global.FACING_DOWN_LEFT;
-            }else if(moving[Global.MOVE_RIGHT]){
+            } else if (moving[Global.MOVE_RIGHT]) {
                 y -= angleVel;
                 x += angleVel;
                 sprite = textureDownRight;
                 facing = Global.FACING_DOWN_RIGHT;
-            }else {
+            } else {
                 y -= velocity;
                 sprite = textureDown;
                 facing = Global.FACING_DOWN;
             }
-        }else if(moving[Global.MOVE_RIGHT]) {
+        } else if (moving[Global.MOVE_RIGHT]) {
             x += velocity;
             sprite = textureRight;
             facing = Global.FACING_RIGHT;
-        }else if(moving[Global.MOVE_LEFT]) {
+        } else if (moving[Global.MOVE_LEFT]) {
             x -= velocity;
             sprite = textureLeft;
             facing = Global.FACING_LEFT;
         }
+
         super.setX(x);
         super.setY(y);
-        }
+    }
 
-    public void hit(double dmg){
+    public void hit(double dmg) {
         hp -= dmg;
+
     }
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "Enemy{" +
                 "x=" + x +
                 ", y=" + y +
                 ", hp=" + hp +
@@ -207,16 +202,14 @@ public class Enemy extends Body{
                 '}';
     }
 
-    public void draw(SpriteBatch batch, Vector2 playerPos, Vector2 screenRes){
+    public void draw(SpriteBatch batch, Vector2 playerPos, Vector2 screenRes) {
+
         batch.draw(sprite, x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, sprite.getRegionWidth(), sprite.getRegionHeight());
     }
 
-    private void checkInSight(Player player, Double distance){
-
-
+    public void shape(ShapeRenderer shape, Vector2 playerPos, Vector2 screenRes) {
+        shape.rect(x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, 50, 50);
     }
-
-
 
     public boolean isInRange() {
         return inRange;
@@ -245,13 +238,13 @@ public class Enemy extends Body{
     public boolean isInSightY() {
         return inSightY;
     }
+
     public double getDistance() {
         return distance;
     }
+}
 
     public class ConeSight{
-
-
 
         private double sideA;
         private double aX;
@@ -260,8 +253,6 @@ public class Enemy extends Body{
         private double sideB;
         private double bX;
         private double by;
-
-
 
         private int angle;
 
@@ -344,7 +335,7 @@ public class Enemy extends Body{
 
         }
 
-        private void recalcCone(Enemy e, int angle){
+        protected void recalcCone(Enemy e, int angle){
 
             if(e.sprite == textureRight){
                 sideA = (Math.sin(Math.toRadians(angle)) * Global.RANGE);
@@ -422,14 +413,6 @@ public class Enemy extends Body{
 
         }
 
-        public int getAngle() {
-            return angle;
-        }
-
-        public void setAngle(int angle) {
-            this.angle = angle;
-        }
-
         public double getaX() {
             return aX;
         }
@@ -480,4 +463,5 @@ public class Enemy extends Body{
 
 
     }
-}
+
+

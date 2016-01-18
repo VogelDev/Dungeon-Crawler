@@ -2,6 +2,8 @@ package me.vogeldev.dungeon.Bodies;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 
 import me.vogeldev.dungeon.Equipment.Weapon;
 import me.vogeldev.dungeon.support.ControllerHandler;
@@ -22,15 +24,15 @@ public class Body {
     protected TextureRegion textureUpRight;
     protected TextureRegion textureDownLeft;
 
-    String debug = "";
-    float x, y, screenWidth, screenHeight;
-    double angleVel;
-    int hp, velocity, level, facing, width, height;
-    long atkStart;
+    protected String debug = "";
+    protected float x, y, screenWidth, screenHeight;
+    protected double angleVel;
+    protected int hp, velocity, range, level, xp, facing, width, height;
+    protected long atkStart;
 
-    boolean[] moving;
-    TextureRegion sprite;
-    Weapon weapon;
+    protected boolean[] moving;
+    protected TextureRegion sprite;
+    protected Weapon weapon;
 
     public Body(float x, float y, int hp, float screenWidth, float screenHeight) {
         this.x = x;
@@ -40,6 +42,7 @@ public class Body {
         this.screenHeight = screenHeight;
         velocity = 5;
         width = height = 50;
+        range = Global.RANGE;
 
         //angle velocity should equal a^2+b^2=c2 where c = velocity and a=b
         //2(a^2)=c^2
@@ -168,4 +171,17 @@ public class Body {
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
     }
+
+    public void hit(double dmg){
+        hp -= dmg;
+    }
+
+    public void xpGain(int xp){
+        this.xp += xp;
+
+        if(xp / Global.XP_TNL == level){
+            level++;
+        }
+    }
+
 }

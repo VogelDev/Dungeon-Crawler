@@ -1,5 +1,6 @@
 package me.vogeldev.dungeon.Equipment;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 import me.vogeldev.dungeon.Bodies.Body;
 import me.vogeldev.dungeon.Bodies.Enemy;
+import me.vogeldev.dungeon.Bodies.Player;
 import me.vogeldev.dungeon.support.Global;
 
 /**
@@ -17,7 +19,7 @@ import me.vogeldev.dungeon.support.Global;
 public class  Weapon {
 
     double dmgMult, angleReach, atkAngle;
-    float x, y;
+    float x, y, width;
     int step, reach;
     Body wielder;
     private TextureAtlas weaponAtlas;
@@ -34,31 +36,32 @@ public class  Weapon {
 
         isAttacking = false;
         atkType = false;
-        reach = 30;
+        reach = Global.WEAPON_REACH;
+        width = Global.WEAPON_WIDTH;
         angleReach = Math.sqrt(Math.pow(reach, 2) / 2);
         atkAngle = 4 * Math.PI;
-        motion = new float[24];
+        motion = new float[20];
 
         weaponAtlas = new TextureAtlas("game_atlas.pack");
         sprite = weaponAtlas.findRegion("weapon_debug");
     }
 
-    public void update(ArrayList<Enemy> enemies){
+    private void update(){
 
         x = wielder.getX();
         y = wielder.getY();
 
-        if(isAttacking){
-            if(step >= motion.length){
+        if(isAttacking) {
+            if (step >= motion.length) {
                 step = 0;
                 isAttacking = false;
                 motion = new float[24];
                 x = wielder.getX();
                 y = wielder.getY();
                 madeContact = false;
-            }else{
-                if(atkType){ //thrust
-                    switch(wielder.getFacing()){
+            } else {
+                if (atkType) { //thrust
+                    switch (wielder.getFacing()) {
                         case Global.FACING_UP:
                             x += wielder.getWidth();
                             y += motion[step++] * reach + wielder.getHeight();
@@ -90,7 +93,7 @@ public class  Weapon {
                             y -= motion[step++] * angleReach + 10;
                             break;
                     }
-                }else{ //swing
+                } else { //swing
                     //Times 2 because this formula is for radius, we want diameter
                     // divide x coordinate by 3 because, well, I honestly don't know. That
                     // centered it. I'll figure the math out later.
@@ -100,37 +103,94 @@ public class  Weapon {
                     x += xMod;
                     y += yMod;
                 }
-                for(int i = 0; i < enemies.size(); i++){
+            }
+        }
+    }
 
-                    Enemy b1 = enemies.get(i);
-                    boolean rightClear = x > b1.getX() + 45;
-                    boolean belowClear = y < b1.getY() - 10;
-                    boolean leftClear = x < b1.getX() - 10;
-                    boolean aboveClear = y > b1.getY() + 45;
+    //update method for the player to check collisions with the enemies near him.
+    public void update(ArrayList<Enemy> enemies){
 
-                    if(!rightClear && !leftClear && !aboveClear && !belowClear) {
-                        if(!madeContact){
-                            //If thrusting only hit first enemy, do normal damage
-                            //If bludgeoning or piercing weapon (i.e. mace, dagger, axe) only hit first enemy, do damage plus half
-                            //If slicing weapon (i.e sword) hit all enemies on the arc, do reduced damage.
-                            if(atkType) {
-                                b1.hit(dmgMult);
-                                madeContact = true;
-                            }else{
-                                if(false){
-                                    b1.hit(dmgMult * 1.5);
-                                    madeContact = true;
-                                }else{
-                                    b1.hit(dmgMult * .8f);
-                                }
-                            }
-                        }
-                        if(b1.getHp() <= 0)
-                            enemies.remove(b1);
-                    }
+        update();
+
+        if(isAttacking && !madeContact) {
+            for (int i = 0; i < enemies.size(); i++) {
+
+                Enemy b1 = enemies.get(i);
+
+                if (collisionCheck(b1)) {
+                    wielder.xpGain(Global.XP_PER_KILL * b1.getLevel() / wielder.getLevel());
+                    enemies.remove(b1);
                 }
             }
         }
+    }
+
+    //update method for the enemy to check collisions with the player
+    public void update(Player player){
+        update();
+
+        if(collisionCheck(player)){
+            //player is dead
+        }
+    }
+
+    /**
+     * Checks if this weapon is colliding with the given body and handles the collision
+     * @param body
+     * @return True if the body has <=0 HP
+     */
+    public boolean collisionCheck(Body body){
+
+        /*
+        boolean rightClear = x > body.getX() + body.getWidth() - 5;
+        boolean belowClear = y < body.getY() - width;
+        boolean leftClear = x < body.getX() - width;
+        boolean aboveClear = y > body.getY() + body.getWidth() - 5;
+        */
+
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.PINK);
+        shapeRenderer.rect(body.getX() - 10 + wielder.getScreenWidth() / 2 - wielder.getX(), body.getY() - 10 + wielder.getScreenHeight() / 2 - wielder.getY(), 55, 55);
+        shapeRenderer.end();
+
+        boolean rightClear = x > body.getX() + 45;
+        boolean belowClear = y < body.getY() - 10;
+        boolean leftClear = x < body.getX() - 10;
+        boolean aboveClear = y > body.getY() + 45;
+
+        System.out.println("checking collision");
+        System.out.println("rightClear:" + rightClear);
+        System.out.println("belowClear:" + belowClear);
+        System.out.println("leftClear:" + leftClear);
+        System.out.println("aboveClear:" + aboveClear);
+
+        if(!rightClear && !leftClear && !aboveClear && !belowClear) {
+            System.out.println("made contact: " + madeContact);
+            if(!madeContact){
+                System.out.println("hit: " + System.currentTimeMillis());
+                //If thrusting only hit first enemy, do normal damage
+                //If bludgeoning or piercing weapon (i.e. mace, dagger, axe) only hit first enemy, do damage plus half
+                //If slicing weapon (i.e sword) hit all enemies on the arc, do reduced damage.
+                if(atkType) {
+                    body.hit(dmgMult);
+                    madeContact = true;
+                }else{
+                    if(false){
+                        body.hit(dmgMult * 1.5);
+                        madeContact = true;
+                    }else{
+                        body.hit(dmgMult * .8f);
+                    }
+                }
+            }
+            if(body.getHp() <= 0){
+                //body is dead
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public String debug(){
@@ -192,5 +252,13 @@ public class  Weapon {
 
     public boolean isAttacking() {
         return isAttacking;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
     }
 }

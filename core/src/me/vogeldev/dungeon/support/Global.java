@@ -39,4 +39,10 @@ public class Global {
 
     // Range of all enemies
     public static final int RANGE = 300;
+
+    //Universal Constants
+    public static final int XP_PER_KILL = 20;
+    public static final int XP_TNL = 100;
+    public static final int WEAPON_REACH = 30;
+    public static final int WEAPON_WIDTH = 10;
 }

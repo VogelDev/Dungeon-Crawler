@@ -175,7 +175,7 @@ public class Player extends Body{
             facing = Global.FACING_LEFT;
         }
 
-        weapon.update(enemies);
+        //weapon.update(enemies);
     }
 
     public int getFacing(){
