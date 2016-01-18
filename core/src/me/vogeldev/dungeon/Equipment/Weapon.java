@@ -14,7 +14,7 @@ import me.vogeldev.dungeon.support.Global;
 /**
  * Created by vogel on 1/13/16.
  */
-public class Weapon {
+public class  Weapon {
 
     double dmgMult, angleReach, atkAngle;
     float x, y;

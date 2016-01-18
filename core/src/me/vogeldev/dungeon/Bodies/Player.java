@@ -106,10 +106,12 @@ public class Player extends Body{
             debug += "\n" + b1.getClass().getName();
             debug += "\nright: " + rightClear + "\nbelow: " + belowClear + "\nleft: " + leftClear + "\nabove: " + aboveClear;
             debug += "\n" + b1.getX() + ", " + b1.getY();
-            //debug += "\n" + "XSight:" + b1.getLineOfSight().getaX() + " " + b1.getLineOfSight().getbX();
-            //debug += "\n" + "XSight true:" + b1.isInSightX();
-            //debug += "\n" + "YSight:" + b1.getLineOfSight().getaY() + " " + b1.getLineOfSight().getbY();
-            //debug += "\n" + "YSight true:" + b1.isInSightY();
+            debug += "\n" + "XSight:" + b1.getLineOfSight().getaX() + ", " + b1.getLineOfSight().getbX();
+            debug += "\n" + "XSight true:" + b1.isInSightX();
+            debug += "\n" + "YSight:" + b1.getLineOfSight().getaY() + ", " + b1.getLineOfSight().getbY();
+            debug += "\n" + "YSight true:" + b1.isInSightY();
+            debug += "\n" + "Distance: " + b1.getDistance();
+            debug += "\n" + "Facing: " + b1.getFacing();
             debug += "\n" + "in Range: " + b1.isInRange();
             debug += "\n" + "in Sight: " + b1.isInSight();
             debug += "\n" + "hp: " + b1.getHp();
