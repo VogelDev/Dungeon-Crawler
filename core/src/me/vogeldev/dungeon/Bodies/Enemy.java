@@ -23,9 +23,7 @@ public class Enemy extends Body {
 
     private double distance;
     private boolean inRange;
-
     private boolean inSight;
-
     private boolean inSightX;
     private boolean inSightY;
 
@@ -75,7 +73,16 @@ public class Enemy extends Body {
 
         inRange = distance <= range;
 
-        //checkInSight(player, distance);
+        checkInSight(player, distance);
+
+        makeMove(player, inSight);
+
+
+        super.setX(x);
+        super.setY(y);
+    }
+
+    private void checkInSight(Player player, double distance) {
 
         if (sprite == textureUp) {
             lineOfSight.recalcCone(this, 45);
@@ -112,6 +119,10 @@ public class Enemy extends Body {
         }
 
         inSight = ((inSightX && inSightY && inRange) || distance <= 50);
+
+    }
+
+    private void makeMove(Player player, boolean inSight){
 
         if (inSight) {
             if (player.getX() > x + 50)
@@ -182,9 +193,6 @@ public class Enemy extends Body {
             sprite = textureLeft;
             facing = Global.FACING_LEFT;
         }
-
-        super.setX(x);
-        super.setY(y);
     }
 
     public void hit(double dmg) {
@@ -242,7 +250,6 @@ public class Enemy extends Body {
     public double getDistance() {
         return distance;
     }
-}
 
     public class ConeSight{
 
@@ -463,5 +470,8 @@ public class Enemy extends Body {
 
 
     }
+}
+
+
 
 
