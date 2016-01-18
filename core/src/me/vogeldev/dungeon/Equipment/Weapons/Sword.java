@@ -1,4 +1,4 @@
-package me.vogeldev.dungeon.Equipment;
+package me.vogeldev.dungeon.Equipment.Weapons;
 
 import me.vogeldev.dungeon.Bodies.Body;
 

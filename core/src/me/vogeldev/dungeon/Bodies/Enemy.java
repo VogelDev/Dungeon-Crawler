@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.Arrays;
 
-import me.vogeldev.dungeon.Equipment.Weapon;
+import me.vogeldev.dungeon.Equipment.Weapons.Weapon;
 import me.vogeldev.dungeon.support.Global;
 
 

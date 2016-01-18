@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import me.vogeldev.dungeon.Equipment.Weapon;
+import me.vogeldev.dungeon.Equipment.Weapons.Weapon;
 import me.vogeldev.dungeon.support.ControllerHandler;
 import me.vogeldev.dungeon.support.Global;
 

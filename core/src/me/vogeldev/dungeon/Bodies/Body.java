@@ -3,7 +3,7 @@ package me.vogeldev.dungeon.Bodies;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import me.vogeldev.dungeon.Equipment.Weapon;
+import me.vogeldev.dungeon.Equipment.Weapons.Weapon;
 import me.vogeldev.dungeon.support.Global;
 
 /**

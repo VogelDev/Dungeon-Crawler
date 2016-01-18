@@ -1,15 +1,15 @@
-package me.vogeldev.dungeon.Equipment;
+package me.vogeldev.dungeon.Equipment.Weapons;
 
 import me.vogeldev.dungeon.Bodies.Body;
 
 /**
  * Created by Vogel on 1/18/2016.
  */
-public class Mace extends Weapon{
+public class Axe extends Weapon{
 
-    public Mace(Body wielder){
+    public Axe(Body wielder){
         super(wielder);
-        setSpeed(1.2);
+        setSpeed(1.1);
         slicing = false;
     }
 }

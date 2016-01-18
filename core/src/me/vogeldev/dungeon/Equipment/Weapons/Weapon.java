@@ -1,4 +1,4 @@
-package me.vogeldev.dungeon.Equipment;
+package me.vogeldev.dungeon.Equipment.Weapons;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
