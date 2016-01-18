@@ -55,7 +55,7 @@ public class  Weapon {
             if (step >= motion.length) {
                 step = 0;
                 isAttacking = false;
-                motion = new float[24];
+                motion = new float[20];
                 x = wielder.getX();
                 y = wielder.getY();
                 madeContact = false;
@@ -141,23 +141,11 @@ public class  Weapon {
      */
     public boolean collisionCheck(Body body){
 
-        /*
+
         boolean rightClear = x > body.getX() + body.getWidth() - 5;
         boolean belowClear = y < body.getY() - width;
         boolean leftClear = x < body.getX() - width;
         boolean aboveClear = y > body.getY() + body.getWidth() - 5;
-        */
-
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.PINK);
-        shapeRenderer.rect(body.getX() - 10 + wielder.getScreenWidth() / 2 - wielder.getX(), body.getY() - 10 + wielder.getScreenHeight() / 2 - wielder.getY(), 55, 55);
-        shapeRenderer.end();
-
-        boolean rightClear = x > body.getX() + 45;
-        boolean belowClear = y < body.getY() - 10;
-        boolean leftClear = x < body.getX() - 10;
-        boolean aboveClear = y > body.getY() + 45;
 
         System.out.println("checking collision");
         System.out.println("rightClear:" + rightClear);

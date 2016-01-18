@@ -8,6 +8,7 @@ import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -38,6 +39,8 @@ public class MainActivity extends ApplicationAdapter {
 
 	ArrayList<Enemy> enemies;
 	ShapeRenderer shapeRenderer;
+
+	FPSLogger fps;
 
 
 	@Override
@@ -72,12 +75,15 @@ public class MainActivity extends ApplicationAdapter {
 
 		shapeRenderer = new ShapeRenderer();
 
+		fps = new FPSLogger();
 	}
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		fps.log();
 
 		if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.ENTER)){
 			create();
