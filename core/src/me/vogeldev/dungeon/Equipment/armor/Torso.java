@@ -1,13 +1,16 @@
-package me.vogeldev.dungeon.Equipment.Armors;
+package me.vogeldev.dungeon.Equipment.armor;
 
 import me.vogeldev.dungeon.Bodies.Body;
 
 /**
  * Created by louie on 1/18/2016.
  */
-public class Legs extends Armor {
+public class Torso extends Armor {
 
-    Legs(Body w){
+    Torso(Body w){
         super(w);
+
     }
+
 }
+
