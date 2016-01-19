@@ -223,15 +223,45 @@ public class Enemy extends Body {
     }
 
     public void shrink(Enemy e, Body wielder) {
-        float offsetMultiplier = wielder.getLevel() * .05f;
-        float offset = (float) e.getLevel() / (wielder.getLevel() - offsetMultiplier - .5f);
-        e.setX(e.getX() * offset);
-        e.setY(e.getY() * offset);
+        float offset = (float) e.getLevel() / (wielder.getLevel() * .95f - .5f);
         e.setWidth(e.getWidth() * offset);
         e.setHeight(e.getHeight() * offset);
 
-        //super.setRange(Global.RANGE * (e.getLevel() / (wielder.getLevel() - offsetMultiplier - .5f)));
-        range = Global.RANGE * (e.getLevel() / (wielder.getLevel() - offsetMultiplier - .5f));
+        /*
+            batch.draw(sprite, x - playerPos.x + screenRes.x / 2, y - playerPos.y + screenRes.y / 2, width, height);
+
+            d = distance character would have travelled toward center
+            a = angle of character facing player
+            new x = sin(a) * d
+            new y = cos(a) * d
+
+        float xChange = e.getX() * offset;
+        float yChange = e.getY() * offset;
+        double d = Math.sqrt(Math.pow(e.getX() - xChange, 2) + Math.pow(e.getY() - yChange, 2));
+        double dX = Math.abs(wielder.getX() - x);
+        double dY = Math.abs(wielder.getY() - y);
+        double distance = Math.sqrt(dX * dX + dY + dY);
+        double a = Math.atan(dY / dX);
+
+        if(Global.test) {
+            System.out.println(d);
+            System.out.println(dX);
+            System.out.println(dY);
+            System.out.println(distance);
+            System.out.println(Math.toDegrees(a));
+            System.out.println(Math.sin(a) * d);
+            System.out.println(Math.cos(a) * d);
+            Global.test = false;
+        }
+
+        e.setX((float)(e.getX() - Math.sin(a) * d));
+        e.setY((float)(e.getY() - Math.cos(a) * d));
+
+         */
+
+        e.setX(e.getX() * offset);
+        e.setY(e.getY() * offset);
+        range = Global.RANGE * (e.getLevel() / (wielder.getLevel() * .95f - .5f));
     }
 
     public void hit(double dmg) {

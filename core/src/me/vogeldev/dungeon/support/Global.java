@@ -45,4 +45,7 @@ public class Global {
     public static final int XP_TNL = 100;
     public static final int WEAPON_REACH = 30;
     public static final int WEAPON_WIDTH = 10;
+
+    //Test Variables
+    public static boolean test = true;
 }

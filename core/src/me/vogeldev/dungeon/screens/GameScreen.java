@@ -92,6 +92,17 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if(Gdx.input.isKeyPressed(Input.Keys.PLUS)){
+            game.getCamera().zoom += .1;
+            System.out.println("plus");
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.MINUS)){
+            game.getCamera().zoom -= .1;
+            System.out.println("minus");
+        }
+
+        game.getCamera().update();
+
         fps.log();
 
         if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.ENTER)){

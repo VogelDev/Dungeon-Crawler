@@ -3,6 +3,7 @@ package me.vogeldev.dungeon.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import me.vogeldev.dungeon.MainActivity;
+import me.vogeldev.dungeon.OrthographicCameraExample;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -11,5 +12,6 @@ public class DesktopLauncher {
 		cfg.height = 720;
 		cfg.width = 1280;
 		new LwjglApplication(new MainActivity(), cfg);
+		//new LwjglApplication(new OrthographicCameraExample(), cfg);
 	}
 }
