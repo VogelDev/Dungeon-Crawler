@@ -199,4 +199,5 @@ public class Player extends Body{
             weapon.draw(batch, x, y, screenWidth, screenHeight);
         batch.draw(sprite, screenWidth / 2, screenHeight / 2, sprite.getRegionWidth(), sprite.getRegionHeight());
     }
+
 }

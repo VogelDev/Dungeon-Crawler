@@ -194,7 +194,29 @@ public class Body {
         return false;
     }
 
+    public void grow(){
+
+        x *= 1 / (level * .7f);
+        y *= 1 / (level * .7f);
+    }
+
     public int getXP() {
         return xp;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public long getAtkStart() {
+        return atkStart;
+    }
+
+    public void setAtkStart(long atkStart) {
+        this.atkStart = atkStart;
     }
 }

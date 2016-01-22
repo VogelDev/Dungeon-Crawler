@@ -3,137 +3,165 @@ game_atlas.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+640Wx480H
+  rotate: false
+  xy: 1, 21
+  size: 640, 480
+  orig: 640, 480
+  offset: 0, 0
+  index: -1
 enemy_debug_down
   rotate: false
-  xy: 1, 73
+  xy: 643, 451
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_down_left
   rotate: false
-  xy: 1, 21
+  xy: 643, 399
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_down_right
   rotate: false
-  xy: 53, 73
+  xy: 695, 451
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_left
   rotate: false
-  xy: 53, 21
+  xy: 643, 347
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_right
   rotate: false
-  xy: 105, 73
+  xy: 695, 399
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_up
   rotate: false
-  xy: 105, 21
+  xy: 747, 451
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_up_left
   rotate: false
-  xy: 157, 73
+  xy: 643, 295
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 enemy_debug_up_right
   rotate: false
-  xy: 157, 21
+  xy: 695, 347
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_down
   rotate: false
-  xy: 209, 73
+  xy: 747, 399
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_down_left
   rotate: false
-  xy: 209, 21
+  xy: 799, 451
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_down_right
   rotate: false
-  xy: 261, 73
+  xy: 643, 243
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_left
   rotate: false
-  xy: 261, 21
+  xy: 695, 295
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_right
   rotate: false
-  xy: 313, 73
+  xy: 747, 347
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_up
   rotate: false
-  xy: 313, 21
+  xy: 799, 399
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_up_left
   rotate: false
-  xy: 365, 73
+  xy: 851, 451
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 player_debug_up_right
   rotate: false
-  xy: 365, 21
+  xy: 643, 191
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 wall_debug
   rotate: false
-  xy: 417, 73
+  xy: 695, 243
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 weapon_debug_down_left
   rotate: false
-  xy: 417, 41
+  xy: 747, 315
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 weapon_debug_down_right
   rotate: false
-  xy: 469, 93
+  xy: 799, 367
   size: 30, 30
   orig: 30, 30
+  offset: 0, 0
+  index: -1
+weapon_debug_up_left
+  rotate: false
+  xy: 851, 419
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+weapon_debug_up_right
+  rotate: false
+  xy: 903, 471
+  size: 30, 30
+  orig: 30, 30
+  offset: 0, 0
+  index: -1
+weapon_debug_down
+  rotate: false
+  xy: 643, 149
+  size: 18, 40
+  orig: 18, 40
   offset: 0, 0
   index: -1
 weapon_debug_left
@@ -145,42 +173,21 @@ weapon_debug_left
   index: -1
 weapon_debug_right
   rotate: false
-  xy: 43, 1
+  xy: 695, 223
   size: 40, 18
   orig: 40, 18
   offset: 0, 0
   index: -1
-weapon_debug_down
-  rotate: false
-  xy: 449, 31
-  size: 18, 40
-  orig: 18, 40
-  offset: 0, 0
-  index: -1
-weapon_debug_up_left
-  rotate: false
-  xy: 469, 61
-  size: 30, 30
-  orig: 30, 30
-  offset: 0, 0
-  index: -1
-weapon_debug_up_right
-  rotate: false
-  xy: 417, 9
-  size: 30, 30
-  orig: 30, 30
-  offset: 0, 0
-  index: -1
 weapon_debug_up
   rotate: false
-  xy: 469, 19
+  xy: 747, 273
   size: 18, 40
   orig: 18, 40
   offset: 0, 0
   index: -1
 weapon_debug
   rotate: false
-  xy: 501, 113
+  xy: 779, 335
   size: 10, 10
   orig: 10, 10
   offset: 0, 0

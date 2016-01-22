@@ -135,9 +135,9 @@ public class  Weapon {
                 if (collisionCheck(b1)) {
                     if(wielder.xpGain(Global.XP_PER_KILL * b1.getLevel() / wielder.getLevel())){
                         for(Enemy e: enemies) {
-
                             e.shrink(e, wielder);
                         }
+                        wielder.grow();
                     }
                     enemies.remove(b1);
                 }

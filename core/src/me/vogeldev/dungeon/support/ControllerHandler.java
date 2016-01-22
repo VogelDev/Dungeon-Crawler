@@ -42,8 +42,22 @@ public class ControllerHandler implements ControllerListener {
     public boolean buttonDown(Controller controller, int buttonCode) {
         if(buttonCode == XBox360Pad.BUTTON_Y)
             return false;
-        if(buttonCode == XBox360Pad.BUTTON_A)
-            return false;
+        if(buttonCode == XBox360Pad.BUTTON_A) {
+            if (!player.getWeapon().isAttacking()) {
+                if (player.getAtkStart() == 0) {
+                    player.setAtkStart(System.currentTimeMillis());
+                }
+            }
+        }else {
+            if (player.getAtkStart() != 0) {
+                if (System.currentTimeMillis() - player.getAtkStart() > 250)
+                    player.getWeapon().swing();
+                else
+                    player.getWeapon().thrust();
+                player.setAtkStart(0);
+            }
+        }
+
         if(buttonCode == XBox360Pad.BUTTON_X)
             return false;
         if(buttonCode == XBox360Pad.BUTTON_B)

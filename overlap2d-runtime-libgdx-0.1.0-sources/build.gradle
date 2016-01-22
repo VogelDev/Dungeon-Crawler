@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('overlap2d-runtime-libgdx-0.1.0-sources.jar'))
