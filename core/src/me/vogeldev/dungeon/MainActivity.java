@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import me.vogeldev.dungeon.screens.GameScreen;
+import me.vogeldev.dungeon.screens.*;
 
 /**
  * Created by Vogel on 1/18/2016.
@@ -13,7 +13,7 @@ import me.vogeldev.dungeon.screens.GameScreen;
 
 public class MainActivity extends Game {
 
-    GameScreen mainGameScreen;
+    TestScreen mainGameScreen;
     private Viewport viewport;
     private OrthographicCamera camera;
 
@@ -22,7 +22,7 @@ public class MainActivity extends Game {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
         viewport = new FitViewport(1280, 720, camera);
-        mainGameScreen = new GameScreen(this);
+        mainGameScreen = new TestScreen(this);
         setScreen(mainGameScreen);
     }
 

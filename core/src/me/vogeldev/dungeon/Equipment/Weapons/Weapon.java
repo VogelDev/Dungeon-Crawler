@@ -173,12 +173,15 @@ public class  Weapon {
                 //If slicing weapon (i.e sword) hit all enemies on the arc, do reduced damage.
                 if(atkType) {
                     body.hit(dmgMult * wielder.getLevel() / body.getLevel());
+                    System.out.println(dmgMult * wielder.getLevel() / body.getLevel());
                     madeContact = true;
                 }else{
                     if(slicing){
                         body.hit(dmgMult * .25f * wielder.getLevel() / body.getLevel());
+                        System.out.println(dmgMult * .25f * wielder.getLevel() / body.getLevel());
                     }else{
                         body.hit(dmgMult * 1.5);
+                        System.out.println(dmgMult * 1.5);
                         madeContact = true;
                     }
                 }

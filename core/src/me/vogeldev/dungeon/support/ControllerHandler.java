@@ -45,16 +45,9 @@ public class ControllerHandler implements ControllerListener {
         if(buttonCode == XBox360Pad.BUTTON_A) {
             if (!player.getWeapon().isAttacking()) {
                 if (player.getAtkStart() == 0) {
+                    System.out.println("attack start");
                     player.setAtkStart(System.currentTimeMillis());
                 }
-            }
-        }else {
-            if (player.getAtkStart() != 0) {
-                if (System.currentTimeMillis() - player.getAtkStart() > 250)
-                    player.getWeapon().swing();
-                else
-                    player.getWeapon().thrust();
-                player.setAtkStart(0);
             }
         }
 
@@ -72,6 +65,16 @@ public class ControllerHandler implements ControllerListener {
 
     @Override
     public boolean buttonUp(Controller controller, int buttonCode) {
+        if(buttonCode == XBox360Pad.BUTTON_A) {
+            if (player.getAtkStart() != 0) {
+                System.out.println("attack stop");
+                if (System.currentTimeMillis() - player.getAtkStart() > 250)
+                    player.getWeapon().swing();
+                else
+                    player.getWeapon().thrust();
+                player.setAtkStart(0);
+            }
+        }
         return false;
     }
 
@@ -81,9 +84,6 @@ public class ControllerHandler implements ControllerListener {
         // Value will be from -1 to 1 depending how far left/right, up/down the stick is
         // For the Y translation, I use a negative because I like inverted analog stick
         // Like all normal people do! ;)
-
-        System.out.println(System.currentTimeMillis() + ": " + axisCode);
-
 
         // Left Stick
         if(axisCode == XBox360Pad.AXIS_LEFT_X)
