@@ -11,7 +11,7 @@ import me.vogeldev.dungeon.screens.*;
  * Created by Vogel on 1/18/2016.
  */
 
-public class MainActivity extends Game {
+public class MainActivity extends Game{
 
     TestScreen mainGameScreen;
     private Viewport viewport;
